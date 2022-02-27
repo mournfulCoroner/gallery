@@ -4,7 +4,7 @@ import './Header.scss';
 function Header() {
 	return (
 		<header>
-			<NavLink to="/"><h1>Большой Ник</h1></NavLink>
+			<NavLink to="/"><h1 className='author-title'>Большой Ник</h1></NavLink>
 			<div className="menu">
 				<div className="header-block">
 					<NavLink className={({isActive}) => "header-block__link" + (isActive ? " active" : "")} to="/category/1">

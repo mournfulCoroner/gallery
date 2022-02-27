@@ -1,43 +1,51 @@
 header {
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    right: 0;
-    top: 0;
-    // height: var(--header-heigth);
-    background-color: var(--main-color);
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 0 20px;
-
+	position: fixed;
+	z-index: 10;
+	left: 0;
+	right: 0;
+	top: 0;
+	// height: var(--header-heigth);
+	background-color: var(--main-color);
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	padding: 0 20px;
 }
 
-header a, header a:active, header a:hover {
-    color: var(--header-text-color);
+header a,
+header a:active,
+header a:hover {
+	color: var(--header-text-color);
 }
 
+.author-title {
+	font-weight: 600;
+	font-size: 1.5em;
+	padding: 20px 0 20px 10px;
+}
 
 .header-block {
-    position: relative;
-    padding-bottom: 10px;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
 
-    &__link{
-        margin-right: 10px;
-        padding: 10px;
-    }
+	&__link {
+		margin-right: 10px;
+		padding: 10px;
+	}
 
-    &__link.active {
-        background-color: white;
-        margin-right: 35px;
-        position: relative;
-    }
+	&__link.active {
+		background-color: white;
+		padding-right: 35px;
+		position: relative;
+	}
 
-    &__link.active::after {
-            content: "";
-    position: absolute;
-    top: 0px;
-    right: -30px;
-    border-left: 30px solid white;
-    }    
+	&__link.active::after {
+		content: "";
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		border-right: 30px solid var(--main-color);
+		border-bottom: 36.8px solid transparent;
+	}
 }
