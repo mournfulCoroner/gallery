@@ -1,9 +1,14 @@
-import './App.css';
+import './App.scss';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import PageContainer from './components/PageContainer/PageContainer';
+import { useEffect } from 'react';
 
-function App() {
+const App = () => {
+  useEffect(() => {
+    let h = document.querySelector('header').offsetHeight;
+    document.querySelector('.page-container').style.paddingTop = (h + 40) + 'px'
+  }, [])
   return (
     <div className="App">
       <Header/>

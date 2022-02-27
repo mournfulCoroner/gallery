@@ -1,10 +1,10 @@
-import s from './Footer.module.css';
+import './Footer.scss';
 
 function Footer() {
     return (
-        <footer className={s.footer}>
-            <div className={s.footer_block}>
-                <a href="#">А внизу футер</a>
+        <footer>
+            <div className="footer-block">
+                <div>Кружочек с с внутри</div>
             </div>
         </footer>
     );
