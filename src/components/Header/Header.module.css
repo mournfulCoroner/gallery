@@ -1,0 +1,31 @@
+header {
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: var(--header-heigth);
+    background-color: var(--main-color);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+
+}
+
+header a {
+    color: var(--header-text-color);
+}
+
+.header_icon {
+    position: relative;
+    margin-right: 10px;
+}
+
+.header_icon img {
+    max-height: 40px;
+    /* max-width: 40px; */
+}
+
+.header_block {
+    position: relative;
+}
