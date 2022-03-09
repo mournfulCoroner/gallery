@@ -5,17 +5,20 @@ header {
 	right: 0;
 	top: 0;
 	// height: var(--header-heigth);
-	background-color: var(--main-color);
+	background-color: white;
 	display: flex;
 	align-items: flex-start;
 	flex-direction: column;
 	padding: 0 20px;
+	-webkit-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
+-moz-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
+box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
 }
 
 header a,
 header a:active,
 header a:hover {
-	color: var(--header-text-color);
+	color: var(--text-color);
 }
 
 .author-title {
@@ -24,10 +27,11 @@ header a:hover {
 	padding: 20px 0 20px 10px;
 }
 
-.header-block {
+.menu {
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;
+	max-width: 80%;
 
 	&__link {
 		margin-right: 10px;
@@ -35,17 +39,75 @@ header a:hover {
 	}
 
 	&__link.active {
-		background-color: white;
+		// background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+		background-color: #f5f7fa;
 		padding-right: 35px;
 		position: relative;
+		-webkit-box-shadow: 4px 4px 5px -5px rgba(34, 60, 80, 0.6) inset;
+-moz-box-shadow: 4px 4px 5px -5px rgba(34, 60, 80, 0.6) inset;
+box-shadow: 4px 4px 5px -5px rgba(34, 60, 80, 0.6) inset;
 	}
 
 	&__link.active::after {
 		content: "";
 		position: absolute;
-		top: 0px;
-		right: 0px;
-		border-right: 30px solid var(--main-color);
+		top: -1px;
+		right: -1px;
+		border-right: 30px solid white;
 		border-bottom: 36.8px solid transparent;
+	}
+}
+
+.mobile-menu {
+	width: 320px;
+	min-width: 320px;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	margin: 0;
+	right: -320px;
+	padding: 15px 20px;
+	-webkit-transition: right 0.3s;
+	-moz-transition: right 0.3s;
+	transition: right 0.3s;
+	background: white;
+	z-index: 9;
+}
+
+.nav-toggle {
+	position: fixed;
+	right: 50px;
+	top: 1em;
+	padding: 0.5em;
+	background: inherit;
+	color: #000000;
+	background-color: transparent;
+	cursor: pointer;
+	font-size: 1.2em;
+	line-height: 1;
+	z-index: 10;
+	-webkit-transition: all .25s ease-in-out;
+	-moz-transition: all .25s ease-in-out;
+	transition: all .25s ease-in-out;
+}
+
+[id='nav-toggle'] {
+	position: absolute;
+	display: none;
+
+	&:checked ~ .nav-toggle {
+		left: auto;
+		right: 2px;
+		top: 1em;
+		background-color: transparent;
+	}
+
+	&:checked ~ .mobile-menu {
+		right: 0;
+		box-shadow: 4px 0px 20px 0px rgba(0, 0, 0, 0.5);
+		-moz-box-shadow: 4px 0px 20px 0px rgba(0, 0, 0, 0.5);
+		-webkit-box-shadow: 4px 0px 20px 0px rgba(0, 0, 0, 0.5);
+		overflow-y: auto;
 	}
 }

@@ -4,7 +4,7 @@
   --main-color: #b4ceff;
   --main-color80: #b4ceff80;
   --main-color60: #b4ceff60;
-  --header-text-color: #072a6b;
+  --text-color: #072a6b;
   --header-heigth: 65px;
 }
 
@@ -23,10 +23,17 @@ a {
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  color: var(--text-color);
+
+  a:active, a:hover{
+    color: var(--text-color);
+  }
 
   font-family: "Mulish", sans-serif;
   font-size: 1.2em;
 }
+
+
 
 .App-logo {
   height: 40vmin;

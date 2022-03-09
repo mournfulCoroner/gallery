@@ -4,26 +4,38 @@ import './Header.scss';
 function Header() {
 	return (
 		<header>
-			<NavLink to="/"><h1 className='author-title'>Большой Ник</h1></NavLink>
-			<div className="menu">
-				<div className="header-block">
-					<NavLink className={({isActive}) => "header-block__link" + (isActive ? " active" : "")} to="/category/1">
-						Категория раз
-					</NavLink>
-					<NavLink className={({isActive}) => "header-block__link" + (isActive ? " active" : "")} to="/category/2">
-						Категория два
-					</NavLink>
-					<NavLink className={({isActive}) => "header-block__link" + (isActive ? " active" : "")} to="/category/3">
-						Категория три
-					</NavLink>
-					<NavLink className={({isActive}) => "header-block__link" + (isActive ? " active" : "")} to="/category/4">
-						Категория четыре
-					</NavLink>
-					<NavLink className={({isActive}) => "header-block__link" + (isActive ? " active" : "")} to="/category/5">
-						Категория пять
-					</NavLink>
-				</div>
-			</div>
+			<input type="checkbox" id="nav-toggle" hidden />
+			<label htmlFor="nav-toggle" onclick class="nav-toggle">
+				=
+			</label>
+			<NavLink to="/">
+				<h1 className="author-title">Большой Ник</h1>
+			</NavLink>
+			<nav className="menu">
+				<NavLink className={({ isActive }) => 'menu__link' + (isActive ? ' active' : '')} to="/category/1">
+					Категория раз
+				</NavLink>
+				<NavLink className={({ isActive }) => 'menu__link' + (isActive ? ' active' : '')} to="/category/2">
+					Категория два
+				</NavLink>
+				<NavLink className={({ isActive }) => 'menu__link' + (isActive ? ' active' : '')} to="/category/3">
+					Категория три
+				</NavLink>
+				<NavLink className={({ isActive }) => 'menu__link' + (isActive ? ' active' : '')} to="/category/4">
+					Категория четыре
+				</NavLink>
+				<NavLink className={({ isActive }) => 'menu__link' + (isActive ? ' active' : '')} to="/category/5">
+					Категория пять
+				</NavLink>
+			</nav>
+
+			<nav class="mobile-menu">
+				<ul>
+					<li>Раз</li>
+					<li>Два</li>
+					<li>Три</li>
+				</ul>
+			</nav>
 		</header>
 	);
 }
