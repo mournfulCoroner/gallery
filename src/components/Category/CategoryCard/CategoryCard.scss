@@ -1,0 +1,14 @@
+.category-card{
+    padding: 30px;
+    margin-top: 10px;
+    background-color: rgb(178, 212, 255);
+    border-radius: 10px;
+}
+
+.category-card:not(:last-child){
+    margin-bottom: 20px;
+}
+
+.category-card p {
+    margin-bottom: 4px;
+}

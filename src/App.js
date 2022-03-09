@@ -1,7 +1,7 @@
 import './App.scss';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import PageContainer from './components/PageContainer/PageContainer';
+import PageContainer from './routes/PageContainer';
 import { useEffect } from 'react';
 
 const App = () => {
