@@ -33,7 +33,7 @@ function Home(props) {
 						<label htmlFor="agreed_checkbox">Я прочитал и понял условия</label>
 					</div>
 
-					<button disabled={props.agreement} className="agreed-btn" type="button">
+					<button disabled={!props.agreement} className="agreed-btn" type="button">
 						Я принимаю
 					</button>
 				</div>
