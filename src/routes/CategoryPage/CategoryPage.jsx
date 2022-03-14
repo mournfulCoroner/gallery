@@ -24,7 +24,7 @@ function CategoryPage() {
 	let cards = categories.map((category) => <CategoryCard name={category.name} id={category.id} message={category.message} />)
 	return (
 		<div>
-			На странице {params.id} есть элементы:
+			На странице {params.id} есть сообщения:
 			{
 				cards
 			}
