@@ -29,7 +29,7 @@ function Header() {
 				</NavLink>
 			</nav>
 
-			<nav class="mobile-menu">
+			<nav className="mobile-menu">
 				<ul>
 					<li>Раз</li>
 					<li>Два</li>
