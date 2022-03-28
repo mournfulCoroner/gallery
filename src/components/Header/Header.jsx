@@ -1,43 +1,103 @@
 import { NavLink } from 'react-router-dom';
 import './Header.scss';
+import burger from './../../assets/images/burger.png';
+import { connect } from 'react-redux';
+import { userGetters } from '../../bll/reducers/reducerUser';
 
-function Header() {
+function Header(props) {
+	let categories = [
+		{
+			name: 'Категория раз',
+			id: 1
+		},
+		{
+			name: 'Категория два',
+			id: 2
+		},
+		{
+			name: 'Категория три',
+			id: 3
+		},
+		{
+			name: 'Категория четыре',
+			id: 4
+		},
+		{
+			name: 'Категория пять',
+			id: 5
+		}
+	];
 	return (
 		<header>
 			<input type="checkbox" id="nav-toggle" hidden />
-			<label htmlFor="nav-toggle" onclick class="nav-toggle">
-				=
+			<label htmlFor="nav-toggle" className="nav-toggle">
+				<img src={burger} alt="" />
 			</label>
 			<NavLink to="/">
-				<h1 className="author-title">Большой Ник</h1>
+				<h1 className="author-title">sillysea</h1>
 			</NavLink>
 			<nav className="menu">
-				<NavLink className={({ isActive }) => 'menu__link' + (isActive ? ' active' : '')} to="/category/1">
-					Категория раз
-				</NavLink>
-				<NavLink className={({ isActive }) => 'menu__link' + (isActive ? ' active' : '')} to="/category/2">
-					Категория два
-				</NavLink>
-				<NavLink className={({ isActive }) => 'menu__link' + (isActive ? ' active' : '')} to="/category/3">
-					Категория три
-				</NavLink>
-				<NavLink className={({ isActive }) => 'menu__link' + (isActive ? ' active' : '')} to="/category/4">
-					Категория четыре
-				</NavLink>
-				<NavLink className={({ isActive }) => 'menu__link' + (isActive ? ' active' : '')} to="/category/5">
-					Категория пять
-				</NavLink>
+				{categories.map((category) => (
+					<NavLink
+						key={category.id}
+						className={({ isActive }) => 'menu__link' + (isActive ? ' active' : '')}
+						to={`/category/${category.id}`}
+					>
+						{category.name}
+					</NavLink>
+				))}
 			</nav>
 
-			<nav class="mobile-menu">
-				<ul>
-					<li>Раз</li>
-					<li>Два</li>
-					<li>Три</li>
-				</ul>
+			<nav className="mobile-menu">
+				<div className="mobile-menu__container">
+					<NavLink
+						className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
+						to="/login"
+					>
+						Аутентификация
+					</NavLink>
+
+					<NavLink
+						className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
+						to="/donut"
+					>
+						Задонатить
+					</NavLink>
+
+					<NavLink
+						className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
+						to="/question"
+					>
+						Задать вопрос
+					</NavLink>
+					{props.authorization && (
+						<NavLink
+							className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
+							to="/admin"
+						>
+							Редактировать
+						</NavLink>
+					)}
+
+					<div className="mobile-menu__categories">
+						{categories.map((category) => (
+							<NavLink
+								key={category.id}
+								className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
+								to={`/category/${category.id}`}
+							>
+								{category.name}
+							</NavLink>
+						))}
+					</div>
+				</div>
 			</nav>
 		</header>
 	);
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+	authorization: userGetters.getAuthorization(state)
+});
+
+export default connect(mapStateToProps, null)(Header);

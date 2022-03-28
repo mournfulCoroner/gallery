@@ -21,7 +21,7 @@ function CategoryPage() {
 			message: 'mes3'
 		}
 	];
-	let cards = categories.map((category) => <CategoryCard name={category.name} id={category.id} message={category.message} />)
+	let cards = categories.map((category) => <CategoryCard key={category.id} name={category.name} id={category.id} message={category.message} />)
 	return (
 		<div>
 			На странице {params.id} есть сообщения:

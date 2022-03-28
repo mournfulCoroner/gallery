@@ -56,6 +56,10 @@ header a:hover {
 		border-right: 30px solid white;
 		border-bottom: 36.8px solid transparent;
 	}
+
+	@media(max-width: 600px){
+		display: none;
+	}
 }
 
 .mobile-menu {
@@ -73,12 +77,42 @@ header a:hover {
 	transition: right 0.3s;
 	background: white;
 	z-index: 9;
+
+	&__link{
+		width: 100%;
+		padding: 15px 10px;
+		display: block;
+		border: 1px solid #fff;
+
+		&.active{
+			background-color: var(--hover-color);
+		}
+
+		&:hover{
+			background-color: var(--hover-color);
+		}
+	}
+
+	&__container{
+		height: 100%;
+		padding-top: 80px;
+	}
+
+	&__categories{
+		display: none;
+	}
+
+	@media (max-width: 600px) {
+		&__categories{
+			display: block;
+		}
+	}
 }
 
 .nav-toggle {
 	position: fixed;
 	right: 50px;
-	top: 1em;
+	top: 1.35em;
 	padding: 0.5em;
 	background: inherit;
 	color: #000000;
@@ -90,6 +124,12 @@ header a:hover {
 	-webkit-transition: all .25s ease-in-out;
 	-moz-transition: all .25s ease-in-out;
 	transition: all .25s ease-in-out;
+	height: 45px;
+	width: 45px;
+
+	img{
+		width: 100%;
+	}
 }
 
 [id='nav-toggle'] {
@@ -98,8 +138,8 @@ header a:hover {
 
 	&:checked ~ .nav-toggle {
 		left: auto;
-		right: 2px;
-		top: 1em;
+		right: 30px;
+		top: 1.35em;
 		background-color: transparent;
 	}
 
