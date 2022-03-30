@@ -1,0 +1,59 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.7.0
+
+commands:
+  install-dependencies:
+    steps:
+      - run:
+          name: Install dependency
+          command: npm install
+      - run:
+          name: Install packages dependency
+          command: npx lerna bootstrap
+
+jobs:
+  test:
+    docker:
+      - image: cimg/node:17.2.0
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - install-dependencies
+      - run:
+          name: Run tests
+          command: npm run test
+
+      - store_test_results:
+          path: ~/test-results/
+  deploy:
+    machine:
+      image: ubuntu-1604:202007-01
+    steps:
+      - checkout
+      - install-dependencies
+      - run:
+          name: Build client
+          command: npm run build:client
+      - run:
+          name: Build and push Docker image to Heroku
+          command: |
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push --arg MONGODB_CONNECTION_URL=$MONGODB_CONNECTION_URL -a ${HEROKU_APP_NAME} web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a ${HEROKU_APP_NAME} web
+
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - test
+      - deploy:
+            requires:
+              - test
+            filters:
+              branches:
+                only: main

@@ -1,43 +1,16 @@
 {
-  "name": "ikbo-01-19-leutina",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-redux": "^7.2.6",
-    "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
-    "redux": "^4.1.2",
-    "redux-thunk": "^2.4.1",
-    "sass": "^1.49.9",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "name": "root",
+    "private": true,
+    "scripts": {
+        "build:client": "lerna run build --scope \"@myapp/client\"",
+        "docker:build": "docker build . -t course-work-6sem",
+        "docker": "npm run build:client && npm run docker:build",
+        "kill-ports": "kill-port --port 8080,3000",
+        "start": "npm run kill-ports && lerna run start --parallel",
+        "test": "lerna run test --parallel"
+    },
+    "devDependencies": {
+        "kill-port": "^1.6.1",
+        "lerna": "^4.0.0"
+    }
 }
