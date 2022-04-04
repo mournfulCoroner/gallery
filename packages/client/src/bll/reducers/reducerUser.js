@@ -1,3 +1,4 @@
+import axios from "axios";
 
 const initialState = {
     users: [{
@@ -75,15 +76,26 @@ export const userGetters = {
 }
 
 export const login = (nickname, password) => {
-    return (dispatch) => {
-        if (initialState.users.find((user) => user.nickname === nickname && user.password === password)) {
-            dispatch(userActionCreator.login("authorization", nickname));
-            localStorage.setItem("authorization", nickname)
-            localStorage.setItem("password", password)
-        }
-        else {
-            dispatch(userActionCreator.changeLoginError("Ошибка авторизации"));
-        }
+    return async (dispatch) => {
+        await axios
+            .post('/api/users/login', {nickname, password})
+            .then(({data}) => {
+                console.log(data);
+                localStorage.setItem("authorization", data.token)
+                dispatch(userActionCreator.login(data.token, data.user.nickname))
+            })
+            .catch(error => {
+                dispatch(userActionCreator.changeLoginError(error.response.data.message));
+            })
+        
+        // if (initialState.users.find((user) => user.nickname === nickname && user.password === password)) {
+        //     dispatch(userActionCreator.login("authorization", nickname));
+        //     localStorage.setItem("authorization", nickname)
+        //     localStorage.setItem("password", password)
+        // }
+        // else {
+        //     dispatch(userActionCreator.changeLoginError("Ошибка авторизации"));
+        // }
     }
 }
 
@@ -91,6 +103,5 @@ export const logout = () => {
     return (dispatch) => {
         dispatch(userActionCreator.logout());
         localStorage.removeItem("authorization");
-        localStorage.removeItem("logout");
     }
 }

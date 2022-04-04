@@ -1,25 +1,32 @@
 import { login, logout, userGetters } from './../../bll/reducers/reducerUser';
 import { connect } from 'react-redux';
 import './Login.scss';
+import { useEffect, useState } from 'react';
 
 function Login(props) {
+	useEffect(() => {
+		setShowError(props.loginError);
+			setTimeout(() => {
+				setShowError(null);
+			}, 1000);
+	}, [props.loginError])
+	const [ showError, setShowError ] = useState(null);
 
-
-	const submitLogin = (e) => {
+	const submitLogin = async (e) => {
 		e.preventDefault();
-		let loginFormElements = e.currentTarget.elements
-		props.login(loginFormElements.nickname.value, loginFormElements.password.value)
-	}
+		let loginFormElements = e.currentTarget.elements;
+		await props.login(loginFormElements.nickname.value, loginFormElements.password.value)
+	};
 
 	const submitLogout = () => {
-		props.logout()
-	}
+		props.logout();
+	};
 
 	return (
-		<div className='login-page'>
+		<div className="login-page">
 			<div className="form-container">
 				{props.authorization ? (
-					<div className='logout-block'>
+					<div className="logout-block">
 						<p>Выйти из аккаунта?</p>
 						<button onClick={submitLogout}>Выйти</button>
 					</div>
@@ -29,7 +36,7 @@ function Login(props) {
 						<input id="input-login" name="nickname" type="text" />
 						<label htmlFor="input-password">Пароль</label>
 						<input type="password" name="password" id="input-password" />
-						{props.loginError ? <div className='form-block__error'>{props.loginError}</div> : null}
+						{showError ? <div className="form-block__error">{showError}</div> : null}
 						<button>Войти</button>
 					</form>
 				)}

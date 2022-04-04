@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../db/models/User');
 const bcrypt = require('bcrypt')
 const {check, validationResult} = require("express-validator");
+const jwt = require("jsonwebtoken");
 
 router.get('/', async (req, res, next) => {
     const users = await User.find({}).exec();
@@ -28,7 +29,7 @@ router.post('/registration', [
             return res.status(400).json({message: `Пользователь с ником ${nickname} уже существует`})
         }
 
-        const hashPassword = await bcrypt.hash(password, 15)
+        const hashPassword = await bcrypt.hash(password, 4)
         const user = new User({nickname, password: hashPassword});
         await user.save();
         return res.json({message: "Пользователь был успешно создан"})
@@ -37,6 +38,36 @@ router.post('/registration', [
     catch(e){
         console.log(e);
         res.send({message: "Ошибка сервера"});
+    }
+})
+
+router.post('/login', async (req, res) => {
+    try {
+        const { nickname, password } = req.body;
+        const potentialUser = await User.findOne({ nickname });
+
+        if (!potentialUser) {
+            return res.status(404).json({ message: `Такой пользователь не существует` })
+        }
+        const isPassValid = bcrypt.compareSync(password, potentialUser.password);
+        if(!isPassValid){
+            return res.status(400).json({message: "Пароль введён неверно"})
+        }
+
+        const token = jwt.sign({ id: potentialUser.id }, process.env.SECRET_CODE)
+        return res.json(
+            {
+                token,
+                user: {
+                    id: potentialUser.id,
+                    nickname: potentialUser.nickname
+                }
+            }
+        )
+    }
+    catch (e) {
+        console.log(e);
+        res.send({ message: "Ошибка сервера" });
     }
 })
 

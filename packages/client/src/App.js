@@ -4,7 +4,7 @@ import Footer from './components/Footer/Footer';
 import PageContainer from './routes/PageContainer';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { login } from './bll/reducers/reducerUser';
+import {  userActionCreator } from './bll/reducers/reducerUser';
 
 const App = (props) => {
   const login = props.login;
@@ -12,21 +12,9 @@ const App = (props) => {
   
   useEffect(async () => {
     if (localStorage.getItem("authorization")) {
-      login(localStorage.getItem("authorization"), localStorage.getItem("password"))
+      login(localStorage.getItem("authorization"), "")
     }
     headerPadding();
-    // let responce = await fetch("/api/registration", {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json;charset=utf-8'
-    //   },
-    //   body: JSON.stringify({
-    //     nickname: "Admin",
-    //     password: "password"
-    //   })
-    // })
-
-    // console.log("ping", responce); 
   }, [])
 
   const headerPadding = () => {
@@ -44,5 +32,5 @@ const App = (props) => {
 
 
 export default connect(null, {
-  login
+  login: userActionCreator.login
 })(App);
