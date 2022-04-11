@@ -4,6 +4,7 @@ const User = require('../db/models/User');
 const bcrypt = require('bcrypt')
 const {check, validationResult} = require("express-validator");
 const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middleware/auth.middleware")
 
 router.get('/', async (req, res, next) => {
     const users = await User.find({}).exec();
@@ -21,7 +22,7 @@ router.post('/registration', [
         if(!errors.isEmpty()){
             return res.status(400).json({message: "Некорректный запрос", errors})
         }
-        const {nickname, password} = req.body;
+        const {nickname, password } = req.body;
 
         const potentialUser = await User.findOne({nickname});
 
@@ -30,7 +31,7 @@ router.post('/registration', [
         }
 
         const hashPassword = await bcrypt.hash(password, 4)
-        const user = new User({nickname, password: hashPassword});
+        const user = new User({nickname, password: hashPassword, role: 'User'});
         await user.save();
         return res.json({message: "Пользователь был успешно создан"})
 
@@ -54,13 +55,14 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({message: "Пароль введён неверно"})
         }
 
-        const token = jwt.sign({ id: potentialUser.id }, process.env.SECRET_CODE)
+        const token = jwt.sign({ id: potentialUser.id, role: potentialUser.role }, process.env.SECRET_CODE)
         return res.json(
             {
                 token,
                 user: {
                     id: potentialUser.id,
-                    nickname: potentialUser.nickname
+                    nickname: potentialUser.nickname,
+                    role: potentialUser.role
                 }
             }
         )
@@ -70,5 +72,29 @@ router.post('/login', async (req, res) => {
         res.send({ message: "Ошибка сервера" });
     }
 })
+
+router.get('/auth', authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findOne({_id: req.user.id})
+
+        const token = jwt.sign({ id: user.id, role: user.role }, process.env.SECRET_CODE)
+        return res.json(
+            {
+                token,
+                user: {
+                    id: user.id,
+                    nickname: user.nickname,
+                    role: user.role
+                }
+            }
+        )
+    }
+    catch (e) {
+        console.log(e);
+        res.send({ message: "Ошибка сервера" });
+    }
+})
+
+
 
 module.exports = router;

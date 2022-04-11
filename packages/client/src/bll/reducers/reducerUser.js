@@ -1,11 +1,7 @@
 import axios from "axios";
 
 const initialState = {
-    users: [{
-        nickname: "Admin",
-        password: "12345",
-        role: ["Administrator"]
-    }],
+    users: [],
     authorization: "",
     nickname: "",
     loginError: ""
@@ -87,15 +83,22 @@ export const login = (nickname, password) => {
             .catch(error => {
                 dispatch(userActionCreator.changeLoginError(error.response.data.message));
             })
-        
-        // if (initialState.users.find((user) => user.nickname === nickname && user.password === password)) {
-        //     dispatch(userActionCreator.login("authorization", nickname));
-        //     localStorage.setItem("authorization", nickname)
-        //     localStorage.setItem("password", password)
-        // }
-        // else {
-        //     dispatch(userActionCreator.changeLoginError("Ошибка авторизации"));
-        // }
+    }
+}
+
+export const auth = (token) => {
+    return async (dispatch) => {
+        await axios
+            .get('/api/users/auth', { headers:{Authorization: `Bearer ${localStorage.getItem('authorization')}`}})
+            .then(({ data }) => {
+                console.log(data);
+                localStorage.setItem("authorization", data.token)
+                dispatch(userActionCreator.login(data.token, data.user.nickname))
+            })
+            .catch(error => {
+                console.log(error);
+                localStorage.removeItem('authorization')
+            })
     }
 }
 

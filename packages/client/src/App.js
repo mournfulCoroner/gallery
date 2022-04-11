@@ -3,16 +3,15 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import PageContainer from './routes/PageContainer';
 import { useEffect } from 'react';
-import { connect } from 'react-redux';
-import {  userActionCreator } from './bll/reducers/reducerUser';
+import { connect, useDispatch } from 'react-redux';
+import {  auth, userActionCreator } from './bll/reducers/reducerUser';
 
-const App = (props) => {
-  const login = props.login;
-  
+const App = () => {
+  const dispath = useDispatch()
   
   useEffect(async () => {
     if (localStorage.getItem("authorization")) {
-      login(localStorage.getItem("authorization"), "")
+      dispath(auth())
     }
     headerPadding();
   }, [])

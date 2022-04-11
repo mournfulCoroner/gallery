@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 var pingRouter = require('./routes/ping');
 var usersRouter = require('./routes/users');
+var categoriesRouter = require('./routes/categories');
 
 var app = express();
 var router = express.Router();
@@ -21,6 +22,7 @@ app.set('view engine', 'jade');
 var router = express.Router();
 router.use('/ping', pingRouter);
 router.use('/users', usersRouter);
+router.use('/categories', categoriesRouter);
 
 app.use('/api', router);
 
