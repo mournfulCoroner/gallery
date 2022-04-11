@@ -14,7 +14,6 @@ function EditCategoryPanel() {
 
     useEffect(() => {
         dispatch(getCategories())
-        console.log(categories);
     }, [])
 
     let sendNewCategory = () => {

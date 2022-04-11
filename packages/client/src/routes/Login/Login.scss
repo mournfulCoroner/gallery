@@ -30,19 +30,6 @@
 .form-block {
 	padding: 50px 25px 20px 25px;
 
-	input {
-		background-color: #ebf0f9;
-		width: 100%;
-		padding: 12px;
-		border-radius: 7px;
-		margin: 0 0 20px 0;
-		border: 1px solid transparent;
-	}
-
-	input:focus {
-		border: 1px solid var(--main-color);
-	}
-
 	label {
 		text-align: left;
 		width: 100%;

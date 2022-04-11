@@ -25,6 +25,19 @@
 	transition: all .3s ease-in;
 }
 
+	input {
+		background-color: #ebf0f9;
+		width: 100%;
+		padding: 12px;
+		border-radius: 7px;
+		margin: 0 0 20px 0;
+		border: 1px solid transparent;
+	}
+
+	input:focus {
+		border: 1px solid var(--main-color);
+	}
+
 .main-btn:hover {
 	background-color: var(--main-color);
 }

@@ -3,8 +3,8 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import PageContainer from './routes/PageContainer';
 import { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import {  auth, userActionCreator } from './bll/reducers/reducerUser';
+import { useDispatch } from 'react-redux';
+import {  auth } from './bll/reducers/reducerUser';
 
 const App = () => {
   const dispath = useDispatch()
@@ -33,6 +33,4 @@ const App = () => {
 }
 
 
-export default connect(null, {
-  login: userActionCreator.login
-})(App);
+export default App;

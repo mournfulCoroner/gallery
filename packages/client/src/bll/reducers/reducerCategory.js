@@ -7,6 +7,8 @@ const initialState = {
 
 const SET_CATEGORIES = "SET_CATEGORIES";
 const CREATE_CATEGORY = "CREATE_CATEGORY";
+const DELETE_CATEGORY = "DELETE_CATEGORY";
+const UPDATE_CATEGORY = "UPDATE_CATEGORY";
 
 const reducerCategory = (state = initialState, action) => {
     switch (action.type) {
@@ -19,6 +21,20 @@ const reducerCategory = (state = initialState, action) => {
             return {
                 ...state,
                 categories: [...state.categories, action.newCategory]
+            }
+        case DELETE_CATEGORY:
+            return {
+                ...state,
+                categories: state.categories.filter(cat => cat.id !== action.id)
+            }
+        case UPDATE_CATEGORY:
+            return {
+                ...state,
+                categories: state.categories.map(cat => {
+                    if(cat.id === action.id){
+                        cat.name = action.name
+                    }
+                })
             }
         default: {
             return state;
@@ -39,6 +55,18 @@ export const categoryActionCreator = {
         return {
             type: CREATE_CATEGORY,
             newCategory
+        }
+    },
+    deleteCategory(id) {
+        return {
+            type: DELETE_CATEGORY,
+            id
+        }
+    },
+    updateCategory(id, name) {
+        return {
+            type: UPDATE_CATEGORY,
+            id, name
         }
     }
 }
@@ -68,6 +96,32 @@ export const createCategory = (category) => {
             .post('/api/categories/create', { name: category }, { headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` } } )
             .then(({data}) => {
                 dispatch(categoryActionCreator.createCategory(data.category))
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+}
+
+export const deleteCategory = (categoryId) => {
+    return async (dispatch) => {
+        await axios
+            .delete(`/api/categories/${categoryId}/delete`, { headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` } })
+            .then(() => {
+                dispatch(categoryActionCreator.deleteCategory(categoryId))
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+}
+
+export const updateCategory = (categoryId, name) => {
+    return async (dispatch) => {
+        await axios
+            .put(`/api/categories/${categoryId}/update`, {name}, { headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` } })
+            .then(() => {
+                dispatch(categoryActionCreator.updateCategory(categoryId, name))
             })
             .catch(error => {
                 console.log(error);
