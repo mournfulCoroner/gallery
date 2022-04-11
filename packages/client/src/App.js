@@ -13,6 +13,9 @@ const App = () => {
     if (localStorage.getItem("authorization")) {
       dispath(auth())
     }
+  }, [])
+
+  useEffect(() => {
     headerPadding();
   }, [])
 

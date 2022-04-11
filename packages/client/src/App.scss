@@ -1,57 +1,86 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200&display=swap');
 
 :root {
-  --main-color: #b4ceff;
-  --main-color80: #b4ceff80;
-  --main-color60: #b4ceff60;
-  --text-color: #072a6b;
-  --header-heigth: 65px;
-  --hover-color: #c3cfe2;
-  --light-color: #f5f7fa;
+	--main-color: #b4ceff;
+	--main-color80: #b4ceff80;
+	--main-color60: #b4ceff60;
+	--text-color: #072a6b;
+	--header-heigth: 65px;
+	--hover-color: #c3cfe2;
+	--light-color: #f5f7fa;
 }
 
-#root{
-  height: 100%;
+#root {
+	height: 100%;
 }
 
+.main-btn {
+	margin-top: 25px;
+	padding: 10px 45px;
+	border-radius: 10px;
+	font-size: 16px;
+	border: 1.5px solid var(--main-color);
+	background-color: transparent;
+
+	transition: all .3s ease-in;
+}
+
+.main-btn:hover {
+	background-color: var(--main-color);
+}
 
 a {
-  text-decoration: none;
-  color: black;
+	text-decoration: none;
+	color: black;
 }
 
 .App {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  color: var(--text-color);
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
+	color: var(--text-color);
 
-  a:active, a:hover{
-    color: var(--text-color);
-  }
+	a:active,
+	a:hover {
+		color: var(--text-color);
+	}
 
-  font-family: "Mulish", sans-serif;
-  font-size: 1.2em;
+	font-family: "Mulish", sans-serif;
+	font-size: 1.2em;
 }
 
 /*Обнуление*/
-*{
+* {
 	padding: 0;
 	margin: 0;
 	border: 0;
 }
-*,*:before,*:after{
+*,
+*:before,
+*:after {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
-:focus,:active{outline: none;}
-a:focus,a:active{outline: none;}
+:focus,
+:active {
+	outline: none;
+}
+a:focus,
+a:active {
+	outline: none;
+}
 
-nav,footer,header,aside{display: block;}
+nav,
+footer,
+header,
+aside {
+	display: block;
+}
 
-html,body{
+html,
+body {
 	height: 100%;
 	width: 100%;
 	font-size: 100%;
@@ -61,20 +90,48 @@ html,body{
 	-moz-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
 }
-input,button,textarea{font-family:inherit;}
+input,
+button,
+textarea {
+	font-family: inherit;
+}
 
-input::-ms-clear{display: none;}
-button{cursor: pointer;}
-button::-moz-focus-inner {padding:0;border:0;}
-a, a:visited{text-decoration: none;}
-a:hover{text-decoration: none;}
-ul li{list-style: none;}
-img{vertical-align: top;}
+input::-ms-clear {
+	display: none;
+}
+button {
+	cursor: pointer;
+}
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0;
+}
+a,
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+ul li {
+	list-style: none;
+}
+img {
+	vertical-align: top;
+}
 
-h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: inherit;
+	font-weight: 400;
+}
 /*--------------------*/
 
-.bigred{
+.bigred {
 	font-size: 20px;
 	color: red;
 }

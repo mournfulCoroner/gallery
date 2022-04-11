@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const initialState = {
-    categories: []
+    categories: [],
+    category: null
 };
 
 const SET_CATEGORIES = "SET_CATEGORIES";
@@ -53,8 +54,7 @@ export const getCategories = () => {
         await axios
             .get('/api/categories/get')
             .then(({ data }) => {
-                console.log(data);
-                // dispatch(categoryActionCreator.setCategories(data))
+                dispatch(categoryActionCreator.setCategories(data))
             })
             .catch(error => {
                 console.log(error);
@@ -65,9 +65,9 @@ export const getCategories = () => {
 export const createCategory = (category) => {
     return async (dispatch) => {
         await axios
-            .post('/api/categories/create', category)
-            .then(() => {
-                dispatch(categoryActionCreator.createCategory(category))
+            .post('/api/categories/create', { name: category }, { headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` } } )
+            .then(({data}) => {
+                dispatch(categoryActionCreator.createCategory(data.category))
             })
             .catch(error => {
                 console.log(error);

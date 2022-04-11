@@ -76,7 +76,6 @@ export const login = (nickname, password) => {
         await axios
             .post('/api/users/login', {nickname, password})
             .then(({data}) => {
-                console.log(data);
                 localStorage.setItem("authorization", data.token)
                 dispatch(userActionCreator.login(data.user.nickname, data.user.role))
             })
@@ -91,7 +90,6 @@ export const auth = () => {
         await axios
             .get('/api/users/auth', { headers:{Authorization: `Bearer ${localStorage.getItem('authorization')}`}})
             .then(({ data }) => {
-                console.log(data);
                 localStorage.setItem("authorization", data.token)
                 dispatch(userActionCreator.login(data.user.nickname, data.user.role))
             })

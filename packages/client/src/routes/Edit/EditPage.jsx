@@ -1,10 +1,11 @@
 
+import EditCategoryPanel from '../../components/Category/EditCategoryPanel/EditCategoryPanel';
 import './EditPage.scss';
 
 let EditPage = () => {
 	return (
-		<div>
-			Страница редактирования
+		<div className='edit-page'>
+			<EditCategoryPanel/>
 		</div>
 	);
 }

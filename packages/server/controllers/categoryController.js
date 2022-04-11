@@ -4,11 +4,6 @@ const { validationResult } = require("express-validator");
 class CategoryController {
     async createCategory(req, res) {
         try {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(400).json({ message: "Некорректный запрос", errors })
-            }
-
             const { name } = req.body;
 
             const potentialCategory = await Category.findOne({ name });
@@ -19,15 +14,21 @@ class CategoryController {
 
             const category = new Category({ name });
             await category.save();
-            return res.json({ message: "Категория была успешно создана" })
+            return res.json({category, message: "Категория была успешно создана"})
         } catch (error) {
             console.log(error);
             return res.status(400).json(e);
         }
     }
 
-    async getCategory() {
-
+    async getCategory(req, res) {
+        try {
+            const categories = await Category.find({})
+            return res.json(categories)
+        } catch (error) {
+            console.log(error);
+            return res.status(400).json(e);
+        }
     }
 }
 

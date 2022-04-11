@@ -11,6 +11,10 @@ module.exports = (req, res, next) => {
             return res.status(401).json({message: 'Ошибка авторизации'})
         }
         const decoded = jwt.verify(token, process.env.SECRET_CODE)
+
+        if ((req.method == 'PUT' || req.method == 'POST') && decoded.role !== "Admin"){
+            return res.status(403).json({ message: 'Ошибка доступа' })
+        }
         req.user = decoded
         next()
     } catch (error) {

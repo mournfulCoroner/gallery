@@ -1,34 +1,24 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation} from 'react-router-dom';
 import './Header.scss';
 import burger from './../../assets/images/burger.png';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { userGetters } from '../../bll/reducers/reducerUser';
+import { useEffect } from 'react';
+import { getCategories } from '../../bll/reducers/reducerCategory';
 
-function Header(props) {
-	let user = useSelector((state) => state.reducerUser.user)
-	// console.log(user);
-	let categories = [
-		{
-			name: 'Категория раз',
-			id: 1
-		},
-		{
-			name: 'Категория два',
-			id: 2
-		},
-		{
-			name: 'Категория три',
-			id: 3
-		},
-		{
-			name: 'Категория четыре',
-			id: 4
-		},
-		{
-			name: 'Категория пять',
-			id: 5
-		}
-	];
+function Header() {
+	const user = useSelector((state) => state.reducerUser.user)
+	const categories = useSelector(state => state.reducerCategory.categories)
+	const dispatch = useDispatch()
+	
+	const params = useLocation()
+	useEffect(() => {
+		document.querySelector("#nav-toggle").checked = false
+	}, [params])
+	useEffect(() => {
+		dispatch(getCategories())
+	}, [])
+	
 	return (
 		<header>
 			<input type="checkbox" id="nav-toggle" hidden />
@@ -41,7 +31,7 @@ function Header(props) {
 			<nav className="menu">
 				{categories.map((category) => (
 					<NavLink
-						key={category.id}
+						key={category._id}
 						className={({ isActive }) => 'menu__link' + (isActive ? ' active' : '')}
 						to={`/category/${category.id}`}
 					>
@@ -85,7 +75,7 @@ function Header(props) {
 					<div className="mobile-menu__categories">
 						{categories.map((category) => (
 							<NavLink
-								key={category.id}
+								key={category._id}
 								className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
 								to={`/category/${category.id}`}
 							>

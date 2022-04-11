@@ -29,7 +29,7 @@ function Login(props) {
 				{user.nickname ? (
 					<div className="logout-block">
 						<p>Выйти из аккаунта?</p>
-						<button onClick={submitLogout}>Выйти</button>
+						<button className='main-btn' onClick={submitLogout}>Выйти</button>
 					</div>
 				) : (
 					<form onSubmit={submitLogin} className="form-block" action="#">
@@ -38,7 +38,7 @@ function Login(props) {
 						<label htmlFor="input-password">Пароль</label>
 						<input type="password" name="password" id="input-password" />
 						{showError ? <div className="form-block__error">{showError}</div> : null}
-						<button>Войти</button>
+						<button className='main-btn'>Войти</button>
 					</form>
 				)}
 			</div>

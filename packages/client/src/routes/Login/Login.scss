@@ -54,19 +54,3 @@
 	}
 }
 
-.login-page {
-	button {
-		margin-top: 25px;
-		padding: 12px 45px;
-		border-radius: 10px;
-		font-size: 16px;
-		border: 1.5px solid var(--main-color);
-		background-color: transparent;
-
-		transition: all .3s ease-in;
-	}
-
-	button:hover {
-		background-color: var(--main-color);
-	}
-}
