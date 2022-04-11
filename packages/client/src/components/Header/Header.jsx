@@ -1,10 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import './Header.scss';
 import burger from './../../assets/images/burger.png';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { userGetters } from '../../bll/reducers/reducerUser';
 
 function Header(props) {
+	let user = useSelector((state) => state.reducerUser.user)
+	// console.log(user);
 	let categories = [
 		{
 			name: 'Категория раз',
@@ -50,6 +52,7 @@ function Header(props) {
 
 			<nav className="mobile-menu">
 				<div className="mobile-menu__container">
+					<div className='mobile-menu__nickname'>{user.nickname}</div>
 					<NavLink
 						className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
 						to="/login"
@@ -70,7 +73,7 @@ function Header(props) {
 					>
 						Задать вопрос
 					</NavLink>
-					{props.authorization && (
+					{user.role === "Admin" && (
 						<NavLink
 							className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
 							to="/admin"

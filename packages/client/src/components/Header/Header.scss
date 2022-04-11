@@ -78,6 +78,14 @@ header a:hover {
 	background: white;
 	z-index: 9;
 
+	&__nickname{
+		position: absolute;
+		top: 60px;
+		left: 50%;
+		transform: translateX(-50%);
+		font-weight: bold;
+	}
+
 	&__link{
 		width: 100%;
 		padding: 15px 10px;

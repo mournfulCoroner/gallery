@@ -2,8 +2,7 @@ import axios from "axios";
 
 const initialState = {
     users: [],
-    authorization: "",
-    nickname: "",
+    user: {},
     loginError: ""
 };
 
@@ -21,14 +20,15 @@ const reducerUser = (state = initialState, action) => {
         case LOGIN:
             return {
                 ...state,
-                authorization: action.authorization,
-                nickname: action.nickname
+                user: {
+                    nickname: action.nickname,
+                    role: action.role
+                }
             }
         case LOGOUT:
             return {
                 ...state,
-                authorization: "",
-                nickname: ""
+                user: {}
             }
         default: {
             return state;
@@ -45,11 +45,11 @@ export const userActionCreator = {
             loginError
         }
     },
-    login(authorization, nickname) {
+    login(nickname, role) {
         return {
             type: LOGIN,
-            authorization,
-            nickname
+            nickname,
+            role
         }
     },
     logout() {
@@ -78,7 +78,7 @@ export const login = (nickname, password) => {
             .then(({data}) => {
                 console.log(data);
                 localStorage.setItem("authorization", data.token)
-                dispatch(userActionCreator.login(data.token, data.user.nickname))
+                dispatch(userActionCreator.login(data.user.nickname, data.user.role))
             })
             .catch(error => {
                 dispatch(userActionCreator.changeLoginError(error.response.data.message));
@@ -86,14 +86,14 @@ export const login = (nickname, password) => {
     }
 }
 
-export const auth = (token) => {
+export const auth = () => {
     return async (dispatch) => {
         await axios
             .get('/api/users/auth', { headers:{Authorization: `Bearer ${localStorage.getItem('authorization')}`}})
             .then(({ data }) => {
                 console.log(data);
                 localStorage.setItem("authorization", data.token)
-                dispatch(userActionCreator.login(data.token, data.user.nickname))
+                dispatch(userActionCreator.login(data.user.nickname, data.user.role))
             })
             .catch(error => {
                 console.log(error);

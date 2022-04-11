@@ -1,5 +1,5 @@
 import { login, logout, userGetters } from './../../bll/reducers/reducerUser';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import './Login.scss';
 import { useEffect, useState } from 'react';
 
@@ -11,6 +11,7 @@ function Login(props) {
 			}, 1000);
 	}, [props.loginError])
 	const [ showError, setShowError ] = useState(null);
+	const user = useSelector((state => state.reducerUser.user))
 
 	const submitLogin = async (e) => {
 		e.preventDefault();
@@ -25,7 +26,7 @@ function Login(props) {
 	return (
 		<div className="login-page">
 			<div className="form-container">
-				{props.authorization ? (
+				{user.nickname ? (
 					<div className="logout-block">
 						<p>Выйти из аккаунта?</p>
 						<button onClick={submitLogout}>Выйти</button>
