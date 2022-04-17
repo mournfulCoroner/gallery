@@ -15,7 +15,6 @@
 }
 
 .main-btn {
-	margin-top: 25px;
 	padding: 10px 45px;
 	border-radius: 10px;
 	font-size: 16px;
@@ -23,23 +22,35 @@
 	background-color: transparent;
 
 	transition: all .3s ease-in;
+
+	&:hover {
+		background-color: var(--main-color);
+	}
+
+	&.danger {
+		border: 1.5px solid rgb(226, 139, 139);
+	}
+
+	&.danger:hover {
+		background-color: rgb(226, 139, 139);
+	}
 }
 
-	input {
-		background-color: #ebf0f9;
-		width: 100%;
-		padding: 12px;
-		border-radius: 7px;
-		margin: 0 0 20px 0;
-		border: 1px solid transparent;
-	}
+.mt-25{
+	margin-top: 25px;
+}
 
-	input:focus {
-		border: 1px solid var(--main-color);
-	}
+input {
+	background-color: #ebf0f9;
+	width: 100%;
+	padding: 12px;
+	border-radius: 7px;
+	margin: 0 0 20px 0;
+	border: 1px solid transparent;
+}
 
-.main-btn:hover {
-	background-color: var(--main-color);
+input:focus {
+	border: 1px solid var(--main-color);
 }
 
 a {

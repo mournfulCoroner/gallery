@@ -25,15 +25,16 @@ const reducerCategory = (state = initialState, action) => {
         case DELETE_CATEGORY:
             return {
                 ...state,
-                categories: state.categories.filter(cat => cat.id !== action.id)
+                categories: state.categories.filter(cat => cat._id !== action.id)
             }
         case UPDATE_CATEGORY:
             return {
                 ...state,
                 categories: state.categories.map(cat => {
-                    if(cat.id === action.id){
+                    if(cat._id === action.id){
                         cat.name = action.name
                     }
+                    return cat
                 })
             }
         default: {
@@ -83,6 +84,8 @@ export const getCategories = () => {
             .get('/api/categories/get')
             .then(({ data }) => {
                 dispatch(categoryActionCreator.setCategories(data))
+                let h = document.querySelector('header').offsetHeight;
+                document.querySelector('.page-container').style.paddingTop = (h + 40) + 'px'
             })
             .catch(error => {
                 console.log(error);

@@ -9,20 +9,12 @@ import {  auth } from './bll/reducers/reducerUser';
 const App = () => {
   const dispath = useDispatch()
   
-  useEffect(async () => {
+  useEffect(() => {
     if (localStorage.getItem("authorization")) {
       dispath(auth())
     }
   }, [])
 
-  useEffect(() => {
-    headerPadding();
-  }, [])
-
-  const headerPadding = () => {
-    let h = document.querySelector('header').offsetHeight;
-    document.querySelector('.page-container').style.paddingTop = (h + 40) + 'px'
-  }
   return (
     <div className="App">
       <Header />

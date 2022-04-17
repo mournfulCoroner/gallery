@@ -46,11 +46,13 @@ class CategoryController {
             if(!id){
                 return res.status(400).json({ message: `Некорректный запрос` })
             }
-            let res = await Category.deleteOne({_id: id})
-            if (res.deletedCount != 1) {
-                return res.status(404).json({ message: `Категория с id ${id} не найдена` })
-            }
-            return res.json({message: "Категория успешно удалена"})
+            await Category.findByIdAndDelete(id, function (err, result) {
+                if (err) {
+                    throw err;
+                } else {
+                    return res.json({ message: `Категория успешно удалена: ${result}` })
+                }
+            }).clone()
         } catch (error) {
             console.log(error);
             return res.status(500).json(e);
@@ -61,17 +63,22 @@ class CategoryController {
         try {
             const id = req.params.id
             const {name} = req.body;
+            
             if (!id || !name) {
                 return res.status(400).json({ message: `Некорректный запрос` })
             }
-            let res = await Category.updateOne({ _id: id })
-            if(res.modifiedCount != 1){
-                return res.status(404).json({ message: `Категория с id ${id} не найдена` })
-            }
-            return res.json({ message: "Категория успешно обновлена" })
+            Category.findByIdAndUpdate(id, {name}, function(err, result){
+                if(err){
+                    throw err;
+                }else{
+                    console.log("RESULT " + result); 
+                    return res.json({ message: `Категория успешно обновлена` })
+                }
+            }).clone()
+           
         } catch (error) {
             console.log(error);
-            return res.status(500).json(e);            
+            return res.status(500).json(error);            
         }
     }
 }

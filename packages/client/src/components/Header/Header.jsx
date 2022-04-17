@@ -18,6 +18,8 @@ function Header() {
 	useEffect(() => {
 		dispatch(getCategories())
 	}, [])
+
+
 	
 	return (
 		<header>
@@ -77,7 +79,7 @@ function Header() {
 							<NavLink
 								key={category._id}
 								className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
-								to={`/category/${category.id}`}
+								to={`/category/${category._id}`}
 							>
 								{category.name}
 							</NavLink>
