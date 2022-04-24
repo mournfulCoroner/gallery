@@ -101,8 +101,6 @@ router.get('/auth', authMiddleware, async (req, res) => {
 
 router.put('/:nickname/role', authMiddleware, async (req, res) => {
     try {
-        const user = await User.findOne({ _id: req.user.id })
-
         const targetUser = await User.findOne({ nickname: req.params.nickname })
         if(!targetUser){
             return res.status(404).json({ message: `Пользователь не найден` })

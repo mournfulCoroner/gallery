@@ -2,13 +2,15 @@ import axios from "axios";
 
 const initialState = {
     categories: [],
-    category: null
+    category: null,
+    popupDisplay: false
 };
 
 const SET_CATEGORIES = "SET_CATEGORIES";
 const CREATE_CATEGORY = "CREATE_CATEGORY";
 const DELETE_CATEGORY = "DELETE_CATEGORY";
 const UPDATE_CATEGORY = "UPDATE_CATEGORY";
+const TOGGLE_POPUP = "TOGGLE_POPUP";
 
 const reducerCategory = (state = initialState, action) => {
     switch (action.type) {
@@ -17,7 +19,7 @@ const reducerCategory = (state = initialState, action) => {
                 ...state,
                 categories: action.categories
             }
-        case CREATE_CATEGORY: 
+        case CREATE_CATEGORY:
             return {
                 ...state,
                 categories: [...state.categories, action.newCategory]
@@ -31,11 +33,16 @@ const reducerCategory = (state = initialState, action) => {
             return {
                 ...state,
                 categories: state.categories.map(cat => {
-                    if(cat._id === action.id){
+                    if (cat._id === action.id) {
                         cat.name = action.name
                     }
                     return cat
                 })
+            }
+        case TOGGLE_POPUP:
+            return {
+                ...state,
+                popupDisplay: !state.popupDisplay
             }
         default: {
             return state;
@@ -69,6 +76,11 @@ export const categoryActionCreator = {
             type: UPDATE_CATEGORY,
             id, name
         }
+    },
+    togglePopup() {
+        return {
+            type: TOGGLE_POPUP
+        }
     }
 }
 
@@ -76,6 +88,9 @@ export const categoryGetters = {
     getCategories(state) {
         return state.reducerCategory.categories;
     },
+    getPopupDisplay(state) {
+        return state.reducerCategory.popupDisplay
+    }
 }
 
 export const getCategories = () => {
@@ -96,8 +111,8 @@ export const getCategories = () => {
 export const createCategory = (category) => {
     return async (dispatch) => {
         await axios
-            .post('/api/categories/create', { name: category }, { headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` } } )
-            .then(({data}) => {
+            .post('/api/categories/create', { name: category }, { headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` } })
+            .then(({ data }) => {
                 dispatch(categoryActionCreator.createCategory(data.category))
             })
             .catch(error => {
@@ -122,7 +137,7 @@ export const deleteCategory = (categoryId) => {
 export const updateCategory = (categoryId, name) => {
     return async (dispatch) => {
         await axios
-            .put(`/api/categories/${categoryId}/update`, {name}, { headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` } })
+            .put(`/api/categories/${categoryId}/update`, { name }, { headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` } })
             .then(() => {
                 dispatch(categoryActionCreator.updateCategory(categoryId, name))
             })

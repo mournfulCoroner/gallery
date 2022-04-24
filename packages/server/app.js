@@ -3,14 +3,17 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var fileUpload = require('express-fileupload')
 
 var pingRouter = require('./routes/ping');
 var usersRouter = require('./routes/users');
 var categoriesRouter = require('./routes/categories');
+var imagesRouter = require('./routes/images')
 
 var app = express();
 var router = express.Router();
 
+app.use(fileUpload({}))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -23,6 +26,7 @@ var router = express.Router();
 router.use('/ping', pingRouter);
 router.use('/users', usersRouter);
 router.use('/categories', categoriesRouter);
+router.use('/images', imagesRouter)
 
 app.use('/api', router);
 

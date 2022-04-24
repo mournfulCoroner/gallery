@@ -1,5 +1,7 @@
 const Category = require('../models/Category')
-const { validationResult } = require("express-validator");
+const Image = require('../models/Image')
+const categoryService = require("../services/categoryService")
+
 
 class CategoryController {
     async createCategory(req, res) {
@@ -13,11 +15,12 @@ class CategoryController {
             }
 
             const category = new Category({ name });
+            await categoryService.createDir(category)
             await category.save();
             return res.json({category, message: "Категория была успешно создана"})
         } catch (error) {
             console.log(error);
-            return res.status(500).json(e);
+            return res.status(500).json(error);
         }
     }
 
@@ -71,7 +74,6 @@ class CategoryController {
                 if(err){
                     throw err;
                 }else{
-                    console.log("RESULT " + result); 
                     return res.json({ message: `Категория успешно обновлена` })
                 }
             }).clone()
@@ -79,6 +81,19 @@ class CategoryController {
         } catch (error) {
             console.log(error);
             return res.status(500).json(error);            
+        }
+    }
+    async getImages(req, res){
+        try {
+            const id = req.params.id
+            let images = Image.find({category: id})
+            if(images){
+                return res.json(images)
+            }
+        }
+        catch(error){
+            console.log(error);
+            return res.status(500).json(error);   
         }
     }
 }
