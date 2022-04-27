@@ -3,7 +3,8 @@ import axios from "axios";
 const initialState = {
     categories: [],
     category: null,
-    popupDisplay: false
+    popupDisplay: false,
+    images: []
 };
 
 const SET_CATEGORIES = "SET_CATEGORIES";
@@ -34,7 +35,7 @@ const reducerCategory = (state = initialState, action) => {
                 ...state,
                 categories: state.categories.map(cat => {
                     if (cat._id === action.id) {
-                        cat.name = action.name
+                        cat.name = action.name 
                     }
                     return cat
                 })

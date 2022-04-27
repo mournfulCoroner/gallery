@@ -15,14 +15,14 @@
 		background-color: #fff;
 		padding: 20px;
 		border-radius: 10px;
-        display: flex;
-        flex-direction: column;
+		display: flex;
+		flex-direction: column;
 	}
 	&__header {
 		border-bottom: 1px solid var(--text-color);
-        display: flex;
-        padding: 20px 10px;
-        justify-content: space-between;
+		display: flex;
+		padding: 20px 10px;
+		justify-content: space-between;
 	}
 	&__close {
 		background-color: transparent;
@@ -32,37 +32,86 @@
 		}
 	}
 
-    &__create{
-        align-self: flex-end;
-        margin-right: 10px;
-    }
+	&__create {
+		align-self: flex-end;
+		margin-right: 10px;
+	}
 
-    &__main{
-        display: flex;
-        align-items: center;
-    }
-    &__input-section, &__preview-section{
-        flex: 1 1 50%;
-    }
+	&__main {
+		display: flex;
+		align-items: center;
+	}
+	&__input-section,
+	&__preview-section {
+		flex: 1 1 50%;
+	}
 
-    &__input-section{
-        padding: 20px 10px;
-        textarea{
-            resize: none;
-            padding: 12px;
-            background-color: #ebf0f9;
-            border-radius: 10px;
-            height: 120px !important;
-            border: 1px solid transparent;
+	&__input-section {
+		padding: 20px 10px;
+		textarea {
+			resize: none;
+			padding: 12px;
+			background-color: #ebf0f9;
+			border-radius: 10px;
+			height: 120px !important;
+			border: 1px solid transparent;
+		}
+		textarea:focus {
+			border: 1px solid var(--main-color);
+		}
+	}
+
+	&__load-image-btn {
+		margin-bottom: 20px;
+	}
+
+	&__preview-section {
+		display: flex;
+		flex-direction: column;
+		input {
+			display: none;
+		}
+	}
+	&__preview {
+		height: 150px;
+		width: 150px;
+		margin: auto;
+		background-color: #ebf0f9;
+		border: 6px dotted var(--text-color);
+		cursor: pointer;
+		background-position: center;
+		background-repeat: no-repeat;
+		position: relative;
+        background-size: cover;
+
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			background: url("./../../assets/images/camera.png");
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+	}
+	&__preview.load-image {
+		border-color: transparent;
+
+        &::before{
+            background: none;
         }
-        textarea:focus{
-            border: 1px solid var(--main-color);
+
+       &:hover {
+           border:6px solid var(--text-color);
+            &::before{
+               background: url("./../../assets/images/bin.png"); 
+               background-repeat: no-repeat;
+               background-position: center;
+            }
+            
         }
-    }
-    &__preview{
-        height: 150px;
-        width: 150px;
-        margin: auto;
-        background-color: #ebf0f9;
-    }
+	}
+    
 }
