@@ -9,7 +9,6 @@ class ImageController {
         try {
             const file = req.files.file
             const { categoryId, description } = req.body
-            console.log(categoryId);
             const category = await Category.findById(categoryId)
             if (!category) {
                 return res.status(404).json({ message: "Такой категории не существует" })
@@ -20,8 +19,8 @@ class ImageController {
                 description,
                 category: categoryId,
                 size: file.size,
-                path: `\\${category.name}\\${file.name}`,
-                previewPath: `\\${category.name}\\${file.name.substring(0, file.name.lastIndexOf('.'))
+                path: `/files/${category.name}/${file.name}`,
+                previewPath: `/files/${category.name}/${file.name.substring(0, file.name.lastIndexOf('.'))
                     }-prev.jpg`
             })
             await dbImage.save()
@@ -29,6 +28,13 @@ class ImageController {
         } catch (error) {
             console.log(error);
             return res.status(500).json({ message: "Ошибка загрузки" })
+        }
+    }
+    async deleteImage(req, res) {
+        try {
+            
+        } catch (error) {
+            
         }
     }
 

@@ -16,4 +16,6 @@ router.delete('/:id/delete', authMiddleware, categoryController.deleteCategory)
 
 router.put('/:id/update', authMiddleware, categoryController.updateCategory)
 
+router.get('/:id/images', categoryController.getImages)
+
 module.exports = router;

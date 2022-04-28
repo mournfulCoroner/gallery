@@ -86,7 +86,7 @@ class CategoryController {
     async getImages(req, res){
         try {
             const id = req.params.id
-            let images = Image.find({category: id})
+            let images = await Image.find({category: id})
             if(images){
                 return res.json(images)
             }

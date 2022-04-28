@@ -9,7 +9,8 @@
 		box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
 		display: flex;
 		flex-direction: column;
-		height: 100%;
+		max-height: 100%;
+		overflow-y: hidden;
 	}
 
 	&__buttons {
@@ -26,7 +27,7 @@
 		flex-wrap: wrap;
 		justify-content: center;
 
-		input{
+		input {
 			margin: 2px 0;
 		}
 	}
@@ -67,7 +68,9 @@
 	}
 
 	&__edit-field {
-		flex: 1 1 600px;
+		display: flex;
+		flex: 1 0 630px;
+		overflow-y: hidden;
 	}
 
 	&__input-field {
@@ -87,6 +90,8 @@
 	overflow: hidden;
 	position: absolute;
 	display: flex;
+	opacity: 0;
+	visibility: hidden;
 
 	&__input {
 		height: 50px;
@@ -143,6 +148,8 @@
 
 .input-field.active {
 	display: flex;
+	opacity: 1;
+	visibility: visible;
 
 	.input-field__input {
 		left: 0;
@@ -163,18 +170,18 @@
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	width: 100%;
 
 	&__btns {
-		height: 40px;
 		margin-bottom: 15px;
 		display: flex;
 		justify-content: start;
 
-		.main-btn{
+		.main-btn {
 			padding: 10px 30px;
 		}
 
-		.main-btn:not(:last-child){
+		.main-btn:not(:last-child) {
 			margin-right: 10px;
 		}
 	}
@@ -185,6 +192,58 @@
 		-webkit-box-shadow: 0px 0px 8px 2px rgba(34, 60, 80, 0.09) inset;
 		-moz-box-shadow: 0px 0px 8px 2px rgba(34, 60, 80, 0.09) inset;
 		box-shadow: 0px 0px 8px 2px rgba(34, 60, 80, 0.09) inset;
-		flex: 1;
+		overflow-y: auto;
+		// display: grid;
+		// grid-template-columns: repeat(8, 1fr);
+		// max-height: 100%;
+		// grid-auto-rows: 170px;
+		// grid-column-gap: 15px;
+		// grid-row-gap: 15px;
+		display: flex;
+		flex-wrap: wrap;
+		height: 100%;
+		align-items: flex-start;
+		justify-content: center;
+
+		@media (max-width: 1620px) {
+			// grid-template-columns: repeat(7, 1fr);
+		}
+
+		@media (max-width: 1228px) {
+		}
+	}
+
+	@media (max-width: 560px) {
+		&__btns {
+			flex-direction: column;
+
+			.main-btn:not(:last-child) {
+				margin-right: 0;
+				margin-bottom: 15px;
+			}
+		}
+	}
+}
+
+.mini-card {
+	background-color: white;
+	-moz-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
+	-webkit-box-shadow: 0px 5px 10px 2px rgb(34 60 80 / 20%);
+	-moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+	box-shadow: 0px 5px 10px 2px rgb(34 60 80 / 20%);
+	padding: 10px;
+	cursor: pointer;
+	margin: 15px 10px;
+
+	&:hover {
+		transform: scale(1.1);
+	}
+
+	img {
+		width: 110px;
+	}
+
+	&__name {
+		margin: 15px 0;
 	}
 }

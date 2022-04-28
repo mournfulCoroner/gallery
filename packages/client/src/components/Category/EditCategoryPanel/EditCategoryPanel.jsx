@@ -2,8 +2,16 @@ import { useEffect, useState } from 'react';
 import './EditCategoryPanel.scss';
 import cross from '../../../assets/images/cancel.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { createCategory, deleteCategory, getCategories, updateCategory, categoryActionCreator } from '../../../bll/reducers/reducerCategory';
+import {
+	createCategory,
+	deleteCategory,
+	getCategories,
+	updateCategory,
+	categoryActionCreator,
+} from '../../../bll/reducers/reducerCategory';
+import { getImages } from '../../../bll/reducers/reducerImage';
 import Popup from './../../Popup/Popup';
+import ImageCardEdit from './ImageCardEdit';
 
 function EditCategoryPanel() {
 	const [ activeAdd, setActiveAdd ] = useState(false);
@@ -14,6 +22,16 @@ function EditCategoryPanel() {
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.reducerCategory.categories);
 	const popupDisplay = useSelector((state) => state.reducerCategory.popupDisplay);
+	const images = useSelector((state) => state.reducerImage.images);
+
+	useEffect(
+		() => {
+			if (currentCategory != 0) {
+				dispatch(getImages(currentCategory));
+			}
+		},
+		[ currentCategory ]
+	);
 
 	const disableActiveEdit = () => {
 		if (categoryEditName && categoryEditName !== activeEditName) {
@@ -121,18 +139,25 @@ function EditCategoryPanel() {
 					{currentCategory !== 0 && (
 						<div className="edit-category">
 							<div className="edit-category__btns">
-								<button onClick={() => dispatch(categoryActionCreator.togglePopup())} className="main-btn">Добавить картинку</button>
+								<button
+									onClick={() => dispatch(categoryActionCreator.togglePopup())}
+									className="main-btn"
+								>
+									Добавить картинку
+								</button>
 								<button className="main-btn danger" onClick={removeCategory}>
 									Удалить категорию
 								</button>
 							</div>
-							<div className="edit-category__images" />
+							<div className="edit-category__images">
+								{images && images.map((image) => <ImageCardEdit key={image._id} image={image} />)}
+							</div>
 						</div>
 					)}
 				</div>
 			</div>
-		
-			      {popupDisplay && <Popup categoryId={currentCategory}/>}
+
+			{popupDisplay && <Popup categoryId={currentCategory} />}
 		</div>
 	);
 }

@@ -1,39 +1,101 @@
 import './Popup.scss';
 import cross from '../../assets/images/cancel.png';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { categoryActionCreator } from '../../bll/reducers/reducerCategory';
-import { imageActionCreator } from '../../bll/reducers/reducerImage';
+import { loadImage } from '../../bll/reducers/reducerImage';
+import imagePic from '../../assets/images/image.png';
 
 function Popup({ categoryId }) {
 	const [ imageName, setImageName ] = useState('');
 	const [ imageDescription, setImageDescription ] = useState('');
 	const [ imageBackground, setImageBackground ] = useState(false);
+	const [ imageFile, setImageFile ] = useState(null);
+	const [ loadingImage, setLoadingImage ] = useState('');
+	const [ isLoadingError, setIsLoadingError ] = useState(false);
+	const [ dragEnter, setDragEnter ] = useState(false);
 	const dispatch = useDispatch();
 
-	const loadingImage = useSelector((store) => store.reducerImage.loadingImage);
-
 	const fileUploadHandler = (event) => {
-		console.log(event.target.files);
-		if (event.target.files.length) {
+		const files = event.target.files;
+		if (files.length) {
+			setImageFile(files[0]);
+			setImageName(files[0].name.substring(0, files[0].name.lastIndexOf('.')));
 			let reader = new FileReader();
 			reader.onload = (e) => {
-				dispatch(imageActionCreator.setLoadingImage(`url(${e.target.result})`));
+				setLoadingImage(`url(${e.target.result})`);
 				setImageBackground(true);
 				// console.log("success");
 			};
 			reader.readAsDataURL(event.target.files[0]);
 		}
 	};
-
 	const clickOnInput = () => {
 		if (imageBackground) {
 			document.querySelector('#loadImageInput').value = null;
-			dispatch(imageActionCreator.setLoadingImage(""));
+			setLoadingImage('');
 			setImageBackground(false);
+			setImageFile(null);
+			setImageName('');
+			setImageDescription('');
 		} else {
 			document.querySelector('#loadImageInput').click();
 		}
+	};
+
+	const sendImage = () => {
+		if(imageFile && imageName){
+					const extension = imageFile.name.substring(imageFile.name.lastIndexOf('.'), imageFile.name.length);
+		dispatch(loadImage(imageFile, `${imageName}${extension}`, categoryId, imageDescription))
+			.then(() => {
+				dispatch(categoryActionCreator.togglePopup());
+			})
+			.catch((error) => {
+				setIsLoadingError(error);
+			});
+		}
+		else{
+			alert("Необходимые поля не заполнены!")
+		}
+
+	};
+
+	const onDragEnterHandler = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setDragEnter(true);
+	};
+	const onDragLeaveHandler = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setDragEnter(false);
+	};
+	const onDragOverHandler = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setDragEnter(true);
+	};
+	const dropHandler = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		let file = e.dataTransfer.files[0];
+		if (
+			file &&
+			(file.type == 'image/png' ||
+				file.type == 'image/jpg' ||
+				file.type == 'image/jpeg' ||
+				file.type == 'image/webp')
+		) {
+			setImageFile(file);
+			setImageName(file.name.substring(0, file.name.lastIndexOf('.')));
+			let reader = new FileReader();
+			reader.onload = (e) => {
+				setLoadingImage(`url(${e.target.result})`);
+				setImageBackground(true);
+			};
+			reader.readAsDataURL(file);
+		}
+		setDragEnter(false);
 	};
 
 	return (
@@ -45,31 +107,85 @@ function Popup({ categoryId }) {
 						onClick={() => dispatch(categoryActionCreator.togglePopup())}
 						className="image-popup__close"
 					>
-						{categoryId}
 						<img src={cross} alt="" />
 					</button>
 				</div>
-				<div className="image-popup__main">
-					<div className="image-popup__preview-section">
-						<input
-							onChange={fileUploadHandler}
-							id="loadImageInput"
-							type="file"
-							accept="image/png, image/jpg, image/jpeg, image/webp"
-						/>
-						<label htmlFor="loadImageInput" className='main-btn image-popup__load-image-btn'>Загрузить</label>
-						<div
-							onClick={clickOnInput}
-							className={`${imageBackground ? 'load-image image-popup__preview' : 'image-popup__preview'}`}
-							style={{ backgroundImage: loadingImage }}
-						/>
+				{!isLoadingError ? (
+					<div className="image-popup__main">
+						{dragEnter ? (
+							<div
+								className="image-popup__preview-section preview-section"
+								onDragEnter={onDragEnterHandler}
+								onDragLeave={onDragLeaveHandler}
+								onDragOver={onDragOverHandler}
+								onDrop={dropHandler}
+							>
+								<div className="preview-section__enter-zone">
+									<img src={imagePic} alt="" />
+									<span>Опускаем картинку</span>
+								</div>
+							</div>
+						) : (
+							<div
+								className="image-popup__preview-section preview-section"
+								onDragEnter={onDragEnterHandler}
+								onDragLeave={onDragLeaveHandler}
+								onDragOver={onDragOverHandler}
+							>
+								<input
+									onChange={fileUploadHandler}
+									id="loadImageInput"
+									type="file"
+									accept="image/png, image/jpg, image/jpeg, image/webp"
+								/>
+								<label htmlFor="loadImageInput" className="main-btn preview-section__load-image-btn">
+									Загрузить
+								</label>
+								<div
+									onClick={clickOnInput}
+									className={`${imageBackground
+										? 'load-image preview-section__preview'
+										: 'preview-section__preview'}`}
+									style={{ backgroundImage: loadingImage }}
+								/>
+							</div>
+						)}
+						<div className="image-popup__input-section">
+							<input
+								type="text"
+								placeholder="Название"
+								value={imageName}
+								onChange={(e) => setImageName(e.target.value)}
+							/>
+							<textarea
+								name=""
+								placeholder="Описание"
+								value={imageDescription}
+								onChange={(e) => setImageDescription(e.target.value)}
+								id=""
+								cols="30"
+								rows="10"
+							/>
+						</div>
 					</div>
-					<div className="image-popup__input-section">
-						<input type="text" placeholder="Название" value={imageName} onChange={setImageName} />
-						<textarea name="" placeholder="Описание" id="" cols="30" rows="10" />
+				) : (
+					<div className="image-popup__error">
+						<p>Ошибка загрузки!</p>
+						<p>{isLoadingError}</p>
 					</div>
-				</div>
-				<button className="image-popup__create main-btn">Сохранить</button>
+				)}
+				{isLoadingError ? (
+					<button
+						onClick={() => dispatch(categoryActionCreator.togglePopup())}
+						className="image-popup__create main-btn"
+					>
+						Закрыть
+					</button>
+				) : (
+					<button onClick={sendImage} className="image-popup__create main-btn">
+						Сохранить
+					</button>
+				)}
 			</div>
 		</div>
 	);

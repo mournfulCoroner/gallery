@@ -20,7 +20,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
+app.use('/files', express.static('./files'))
+
 app.set('view engine', 'jade');
+
 
 var router = express.Router();
 router.use('/ping', pingRouter);

@@ -55,34 +55,64 @@
 			border-radius: 10px;
 			height: 120px !important;
 			border: 1px solid transparent;
+			width: 100%;
 		}
 		textarea:focus {
 			border: 1px solid var(--main-color);
 		}
 	}
 
-	&__load-image-btn {
-		margin-bottom: 20px;
+	&__error {
+		color: rgb(116, 9, 9);
+		font-size: 20px;
+		height: 100px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
-	&__preview-section {
-		display: flex;
-		flex-direction: column;
-		input {
-			display: none;
+	@media (max-width: 620px) {
+		&__main {
+			flex-direction: column;
+		}
+
+		&__content {
+			margin: 0 10px;
 		}
 	}
+}
+
+.preview-section {
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: center;
+	margin-top: 15px;
+	width: 100%;
+	height: 230px;
+
+	input {
+		display: none;
+	}
+	&__load-image-btn {
+		margin-top: 20px;
+		border: 1px solid;
+
+		&:hover{
+			background-color: rgb(35 46 108 / 66%);
+			color: white;
+		}
+	}
+
 	&__preview {
 		height: 150px;
 		width: 150px;
 		margin: auto;
-		background-color: #ebf0f9;
 		border: 6px dotted var(--text-color);
 		cursor: pointer;
 		background-position: center;
 		background-repeat: no-repeat;
 		position: relative;
-        background-size: cover;
+		background-size: cover;
 
 		&::before {
 			content: "";
@@ -99,19 +129,34 @@
 	&__preview.load-image {
 		border-color: transparent;
 
-        &::before{
-            background: none;
-        }
+		&::before {
+			background: none;
+		}
 
-       &:hover {
-           border:6px solid var(--text-color);
-            &::before{
-               background: url("./../../assets/images/bin.png"); 
-               background-repeat: no-repeat;
-               background-position: center;
-            }
-            
-        }
+		&:hover {
+			border: 6px solid var(--text-color);
+			&::before {
+				background: url("./../../assets/images/bin.png");
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+		}
 	}
-    
+
+	&__enter-zone {
+		padding: 15px;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		border: 6px dotted var(--text-color);
+
+		span {
+			display: block;
+			margin-top: 15px;
+			font-weight: 600;
+		}
+	}
 }
