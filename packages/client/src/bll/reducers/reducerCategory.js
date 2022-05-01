@@ -3,7 +3,8 @@ import axios from "axios";
 const initialState = {
     categories: [],
     category: null,
-    popupDisplay: false
+    popupDisplay: false,
+    editPopupDisplay: false
 };
 
 const SET_CATEGORIES = "SET_CATEGORIES";
@@ -11,6 +12,7 @@ const CREATE_CATEGORY = "CREATE_CATEGORY";
 const DELETE_CATEGORY = "DELETE_CATEGORY";
 const UPDATE_CATEGORY = "UPDATE_CATEGORY";
 const TOGGLE_POPUP = "TOGGLE_POPUP";
+const TOGGLE_EDIT_POPUP = "EDIT_POPUP_DISPLAY"
 
 
 const reducerCategory = (state = initialState, action) => {
@@ -44,6 +46,11 @@ const reducerCategory = (state = initialState, action) => {
             return {
                 ...state,
                 popupDisplay: !state.popupDisplay
+            }
+        case TOGGLE_EDIT_POPUP:
+            return {
+                ...state,
+                editPopupDisplay: action.state
             }
         default: {
             return state;
@@ -83,6 +90,12 @@ export const categoryActionCreator = {
             type: TOGGLE_POPUP
         }
     },
+    toggleEditPopup(state) {
+        return {
+            type: TOGGLE_EDIT_POPUP,
+            state
+        }
+    }
 }
 
 export const categoryGetters = {
