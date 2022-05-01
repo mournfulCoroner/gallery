@@ -5,11 +5,11 @@ class ImageService {
 
     async createImage(image, categoryName) {
         const filePath = `${process.env.filePath}\\${categoryName}\\${image.name}`
-        const name = image.name.substring(0, image.name.lastIndexOf('.')) 
+        const name = image.name.substring(0, image.name.lastIndexOf('.'))
         return new Promise(((resolve, reject) => {
             try {
                 if (!fs.existsSync(filePath)) {
-                    
+
                     image.mv(filePath).then(() => {
                         Jimp.read(filePath, (err, file) => {
                             if (err) throw err;
@@ -29,6 +29,24 @@ class ImageService {
                 return reject({ message: 'Ошибка картинки' })
             }
         }))
+    }
+
+    async deleteImage(filePath, previewFilePath) {
+        return new Promise((resolve, reject) => {
+            try {
+                if (fs.existsSync(filePath)) {
+                    fs.unlink(`${process.env.filePath}\\${filePath}`)
+                    fs.unlink(`${process.env.filePath}\\${previewFilePath}`)
+                    return resolve({message: "Картинка успешно удалена"})
+                }
+                else {
+                    return reject({ message: "Такой картинки на сервере не существует" })
+                }
+            } catch (error) {
+                return reject({ message: 'Ошибка удаления картинки' })
+            }
+
+        })
     }
 
 }

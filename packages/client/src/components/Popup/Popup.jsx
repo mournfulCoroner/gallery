@@ -14,6 +14,7 @@ function Popup({ categoryId }) {
 	const [ loadingImage, setLoadingImage ] = useState('');
 	const [ isLoadingError, setIsLoadingError ] = useState(false);
 	const [ dragEnter, setDragEnter ] = useState(false);
+	const [timer, setTimer] = useState(null)
 	const dispatch = useDispatch();
 
 	const fileUploadHandler = (event) => {
@@ -68,11 +69,17 @@ function Popup({ categoryId }) {
 	const onDragLeaveHandler = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		setDragEnter(false);
+		let timer = setTimeout(() => {
+			setDragEnter(false);
+		}, 100)
+		setTimer(timer)
 	};
 	const onDragOverHandler = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
+		if(timer){
+			clearTimeout(timer)
+		}
 		setDragEnter(true);
 	};
 	const dropHandler = (e) => {

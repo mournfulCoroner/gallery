@@ -1,5 +1,6 @@
 const Category = require('../models/Category')
 const Image = require('../models/Image')
+const imageService = require('../services/imageService')
 const ImageService = require('../services/imageService')
 
 
@@ -32,9 +33,36 @@ class ImageController {
     }
     async deleteImage(req, res) {
         try {
-            
+            const imageId = req.params.id
+            const dbImage = Image.findById(imageId)
+            if (!dbImage) {
+                return res.status(404).json({ message: "Такого изображения не существует" })
+            }
+            await imageService.deleteImage(dbImage.path, dbImage.previewPath)
+            await dbImage.remove()
         } catch (error) {
-            
+            console.log(error);
+            return res.status(500).json({ message: "Ошибка удаления картинки" })
+        }
+    }
+
+    async updateImage(req, res) {
+        try {
+            const id = req.params.id
+            const { name, description } = req.body
+            if (!id || !name || !description) {
+                return res.status(400).json({ message: `Некорректный запрос` })
+            }
+            Image.findByIdAndUpdate(id, { name, description }, function (err, result) {
+                if (err) {
+                    throw err;
+                } else {
+                    return res.json({ message: `Картинка успешно обновлена` })
+                }
+            }).clone()
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json(error);
         }
     }
 

@@ -193,24 +193,12 @@
 		-moz-box-shadow: 0px 0px 8px 2px rgba(34, 60, 80, 0.09) inset;
 		box-shadow: 0px 0px 8px 2px rgba(34, 60, 80, 0.09) inset;
 		overflow-y: auto;
-		// display: grid;
-		// grid-template-columns: repeat(8, 1fr);
-		// max-height: 100%;
-		// grid-auto-rows: 170px;
-		// grid-column-gap: 15px;
-		// grid-row-gap: 15px;
-		display: flex;
-		flex-wrap: wrap;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 		height: 100%;
-		align-items: flex-start;
-		justify-content: center;
 
-		@media (max-width: 1620px) {
-			// grid-template-columns: repeat(7, 1fr);
-		}
+		grid-auto-rows: min-content;
 
-		@media (max-width: 1228px) {
-		}
 	}
 
 	@media (max-width: 560px) {
