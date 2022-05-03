@@ -1,29 +1,49 @@
-
 import './QuestionAdminPage.scss';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteQuestion, getQuestions, readQuestion } from '../../bll/reducers/reducerQuestion';
+import cross from '../../assets/images/cancel.png';
 
 function QuestionAdminPage(props) {
+	const dispatch = useDispatch();
+	let questions = useSelector((store) => store.reducerQuestion.questions);
 	useEffect(() => {
-		
-	}, [])
+		dispatch(getQuestions());
+	}, []);
 
+	const read = (unread, questionId) => {
+		if (unread) {
+			dispatch(readQuestion(questionId));
+		}
+	};
 
 	return (
 		<div className="question-admin-page">
-            <div className="question-admin-page__question-card question-card">
-                <div className="question-card__header">
-                    <p>1. Имяимя</p>
-                    <p>emailemail</p>
-                </div>
-                <div className="question-card__content">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad quo aliquam hic unde ullam omnis dolorem harum, cum illo vero amet asperiores sint quidem eum velit. Perferendis ullam placeat minus.
-                    Repudiandae ex, officiis voluptates ipsum consequuntur reiciendis architecto impedit assumenda mollitia asperiores praesentium illum, cupiditate ipsa voluptatem eligendi inventore fugit eum recusandae minus deleniti ea adipisci exercitationem. Qui, tempore beatae.
-                    Dolores quaerat veritatis fugiat esse veniam? Repellat a vitae cum ullam eligendi, dolorum quis atque, ea magnam laudantium quae tenetur quam voluptatibus commodi. Repudiandae voluptates repellendus magnam, et ducimus cumque!
-                    Ipsum repudiandae ad consequatur officia natus adipisci rem dolores veritatis assumenda velit harum, iusto ex quis numquam ut quia, aliquid distinctio explicabo repellat accusamus impedit, recusandae aut nesciunt! At, sapiente?
-                </div>
-                
-            </div>
-            
+			{questions.map((question, index) => (
+				<div
+					onMouseEnter={() => read(question.unread, question._id)}
+					key={question._id}
+					className={
+						question.unread ? (
+							'question-admin-page__question-card question-card unread'
+						) : (
+							'question-admin-page__question-card question-card'
+						)
+					}
+				>
+					<div className="question-card__header">
+						<p className="question-card__time">{question.date.slice(0, 10)}</p>
+						<p>
+							{index + 1}. {question.name}
+						</p>
+						<p>{question.email}</p>
+						<button onClick={() => dispatch(deleteQuestion(question._id))} className="question-card__close">
+							<img src={cross} alt="" />
+						</button>
+					</div>
+					<div className="question-card__content">{question.text}</div>
+				</div>
+			))}
 		</div>
 	);
 }

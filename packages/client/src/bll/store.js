@@ -3,11 +3,13 @@ import thunk from "redux-thunk";
 import reducerCategory from "./reducers/reducerCategory";
 import reducerUser from "./reducers/reducerUser";
 import reducerImage from "./reducers/reducerImage";
+import reducerQuestion from "./reducers/reducerQuestion";
 
 const reducer = combineReducers({
     reducerUser,
     reducerCategory,
-    reducerImage
+    reducerImage,
+    reducerQuestion
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

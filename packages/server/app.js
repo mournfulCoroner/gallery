@@ -9,6 +9,7 @@ var pingRouter = require('./routes/ping');
 var usersRouter = require('./routes/users');
 var categoriesRouter = require('./routes/categories');
 var imagesRouter = require('./routes/images')
+var questionsRouter = require('./routes/questions')
 
 var app = express();
 var router = express.Router();
@@ -30,6 +31,7 @@ router.use('/ping', pingRouter);
 router.use('/users', usersRouter);
 router.use('/categories', categoriesRouter);
 router.use('/images', imagesRouter)
+router.use('/questions', questionsRouter)
 
 app.use('/api', router);
 

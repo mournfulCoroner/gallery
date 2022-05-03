@@ -39,7 +39,7 @@ class CategoryController {
             return res.json(categories)
         } catch (error) {
             console.log(error);
-            return res.status(400).json(e);
+            return res.status(500).json(e);
         }
     }
 
