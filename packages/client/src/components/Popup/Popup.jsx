@@ -1,7 +1,7 @@
 import './Popup.scss';
 import cross from '../../assets/images/cancel.png';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { categoryActionCreator } from '../../bll/reducers/reducerCategory';
 import { loadImage } from '../../bll/reducers/reducerImage';
 import imagePic from '../../assets/images/image.png';
@@ -15,6 +15,8 @@ function Popup({ categoryId }) {
 	const [ isLoadingError, setIsLoadingError ] = useState(false);
 	const [ dragEnter, setDragEnter ] = useState(false);
 	const [timer, setTimer] = useState(null)
+
+	let progress = useSelector(state => state.reducerImage.progress)
 	const dispatch = useDispatch();
 
 	const fileUploadHandler = (event) => {
@@ -116,6 +118,7 @@ function Popup({ categoryId }) {
 					>
 						<img src={cross} alt="" />
 					</button>
+					<div className="image-edit-popup__loading" style={{width: progress + '%'}}></div>
 				</div>
 				{!isLoadingError ? (
 					<div className="image-edit-popup__main">

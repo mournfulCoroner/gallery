@@ -13,7 +13,8 @@ const initialState = {
             category: "1"
         }
     ],
-    imagePopupDisplay: false
+    imagePopupDisplay: false,
+    progress: 0
 };
 
 const SET_LOADING_IMAGE = "SET_LOADING_IMAGE";
@@ -22,6 +23,7 @@ const ADD_IMAGE = "ADD_IMAGE";
 const DELETE_IMAGE = "DELETE_IMAGE";
 const UPDATE_IMAGE = "UPDATE_IMAGE";
 const TOOGLE_IMAGE_POPUP = "TOGGLE_IMAGE_POPUP"
+const CHANGE_PROGRESS = "CHANGE_PROGRESS"
 
 const reducerImage = (state = initialState, action) => {
     switch (action.type) {
@@ -60,6 +62,11 @@ const reducerImage = (state = initialState, action) => {
             return {
                 ...state,
                 imagePopupDisplay: action.state
+            }
+        case CHANGE_PROGRESS:
+            return {
+                ...state,
+                progress: action.progress
             }
         default: {
             return state;
@@ -105,6 +112,12 @@ export const imageActionCreator = {
             type: TOOGLE_IMAGE_POPUP,
             state
         }
+    },
+    setProgress(progress) {
+        return {
+            type: CHANGE_PROGRESS,
+            progress
+        }
     }
 }
 
@@ -122,11 +135,13 @@ export const loadImage = (file, fileName, categoryId, description) => {
                     console.log('total', totalLength)
                     if (totalLength) {
                         let progress = Math.round((progressEvent.loaded * 100) / totalLength)
+                        dispatch(imageActionCreator.setProgress(progress))
                         console.log(progress)
                     }
                 }
             }).then(({ data }) => {
                 dispatch(imageActionCreator.addImage(data))
+                dispatch(imageActionCreator.setProgress(0))
             })
     }
 }

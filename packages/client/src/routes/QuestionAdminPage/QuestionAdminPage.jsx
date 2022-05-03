@@ -1,19 +1,23 @@
 import './QuestionAdminPage.scss';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteQuestion, getQuestions, readQuestion } from '../../bll/reducers/reducerQuestion';
 import cross from '../../assets/images/cancel.png';
 
 function QuestionAdminPage(props) {
 	const dispatch = useDispatch();
+    const [isReading, setIsReading] = useState([])
 	let questions = useSelector((store) => store.reducerQuestion.questions);
 	useEffect(() => {
 		dispatch(getQuestions());
 	}, []);
 
 	const read = (unread, questionId) => {
-		if (unread) {
-			dispatch(readQuestion(questionId));
+		if (unread && !isReading.includes(questionId)) {
+            setIsReading([...isReading, questionId])
+			dispatch(readQuestion(questionId)).then(() => {
+                setIsReading([isReading.filter((quest) => quest._id !== questionId)])
+            });
 		}
 	};
 

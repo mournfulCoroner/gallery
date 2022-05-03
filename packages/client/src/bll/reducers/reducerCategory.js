@@ -103,15 +103,6 @@ export const categoryActionCreator = {
     }
 }
 
-export const categoryGetters = {
-    getCategories(state) {
-        return state.reducerCategory.categories;
-    },
-    getPopupDisplay(state) {
-        return state.reducerCategory.popupDisplay
-    }
-}
-
 export const getCategories = () => {
     return async (dispatch) => {
         await axios

@@ -21,7 +21,7 @@ class QuestionController {
                 questions = await Question.find({ _id: req.query.questionId })
             }
             else {
-                questions = await Question.find({}).sort({ date: 'desc' })
+                questions = await Question.find({}).sort({ _id: 'desc' })
             }
             return res.json(questions)
         } catch (error) {
