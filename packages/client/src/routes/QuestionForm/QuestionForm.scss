@@ -29,4 +29,8 @@
 		justify-content: flex-end;
 		padding: 0 10px;
 	}
+
+	@media(max-width: 767px){
+		align-self: flex-start;
+	}
 }

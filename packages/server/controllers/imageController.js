@@ -34,12 +34,13 @@ class ImageController {
     async deleteImage(req, res) {
         try {
             const imageId = req.params.id
-            const dbImage = Image.findById(imageId)
+            const dbImage = await Image.findById(imageId)
             if (!dbImage) {
                 return res.status(404).json({ message: "Такого изображения не существует" })
             }
             await imageService.deleteImage(dbImage.path, dbImage.previewPath)
             await dbImage.remove()
+            return res.json({message: "Картинка успешно удалена"})
         } catch (error) {
             console.log(error);
             return res.status(500).json({ message: "Ошибка удаления картинки" })

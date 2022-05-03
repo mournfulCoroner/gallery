@@ -1,8 +1,8 @@
 import './EditCategoryPanel.scss';
 
-function ImageCardEdit({image}) {
+function ImageCardEdit({image, onCustomClick}) {
 	return (
-		<div className="mini-card">
+		<div onClick={onCustomClick} className="mini-card">
 			<div className="mini-card__image">
 				<img src={image.previewPath} alt="" />
 			</div>

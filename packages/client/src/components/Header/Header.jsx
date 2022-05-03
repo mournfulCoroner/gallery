@@ -64,7 +64,7 @@ function Header() {
 						<div>
 							<NavLink
 								className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
-								to="/admin"
+								to="/admin/category"
 							>
 								Редактировать
 							</NavLink>

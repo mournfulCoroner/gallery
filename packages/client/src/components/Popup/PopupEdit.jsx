@@ -3,7 +3,7 @@ import cross from '../../assets/images/cancel.png';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { categoryActionCreator } from '../../bll/reducers/reducerCategory';
-import { loadImage } from '../../bll/reducers/reducerImage';
+import { deleteImage, loadImage, updateImage } from '../../bll/reducers/reducerImage';
 
 function PopupEdit({ image }) {
 	const [ imageName, setImageName ] = useState('');
@@ -18,26 +18,26 @@ function PopupEdit({ image }) {
 		setImageName(image.name.substring(0, image.name.lastIndexOf('.')));
 	}, []);
 
-	const deleteImage = () => {
+	const removeImage = () => {
 		if (image._id) {
 			dispatch(deleteImage(image._id))
 				.then(() => {
 					dispatch(categoryActionCreator.toggleEditPopup(false));
 				})
 				.catch((error) => {
-					setIsLoadingError(error);
+					setIsLoadingError(error.response.data.message);
 				});
 		}
 	};
 
 	const sendImage = () => {
 		if (imageName) {
-			dispatch(loadImage(image._id, `${imageName}${imageExtension}`, imageDescription))
+			dispatch(updateImage(image._id, imageDescription, `${imageName}${imageExtension}`))
 				.then(() => {
 					dispatch(categoryActionCreator.toggleEditPopup(false));
 				})
 				.catch((error) => {
-					setIsLoadingError(error);
+					setIsLoadingError(error.response.data.message);
 				});
 		} else {
 			alert('Необходимые поля не заполнены!');
@@ -94,10 +94,10 @@ function PopupEdit({ image }) {
 					</button>
 				) : (
 					<div>
-						<button onClick={deleteImage} className="image-edit-popup__create main-btn">
+						<button onClick={() => removeImage()} className="image-edit-popup__create main-btn danger">
 							Удалить
 						</button>
-						<button onClick={sendImage} className="image-edit-popup__create main-btn">
+						<button onClick={() => sendImage()} className="image-edit-popup__create main-btn">
 							Сохранить
 						</button>
 					</div>

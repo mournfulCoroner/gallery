@@ -16,8 +16,9 @@ const PageContainer = () => {
 				<Route path="/" element={<Home />} />
 				<Route path="/category/:id" element={<CategoryPage />} />
 				<Route path="/login" element={<Login/>}/>
-				<Route path="/question" element={<QuestionAdminPage/>}/>
-				<Route path="/admin" element={user.role === "Admin" ? <EditPage/> : <Navigate to="/login"/>}/>
+				<Route path="/admin/question" element={<QuestionAdminPage/>}/>
+				<Route path="/question" element={<QuestionForm/>}/>
+				<Route path="/admin/category" element={user.role === "Admin" ? <EditPage/> : <Navigate to="/login"/>}/>
 			</Routes>
 		</div>
 	);

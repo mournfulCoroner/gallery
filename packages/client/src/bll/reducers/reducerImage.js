@@ -147,12 +147,9 @@ export const getImages = (categoryId) => {
 export const deleteImage = (imageId) => {
     return async (dispatch) => {
         await axios
-            .delete(`/api/images/delete/${imageId}`)
+            .delete(`/api/images/delete/${imageId}`, { headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` } })
             .then(() => {
                 dispatch(imageActionCreator.deleteImage(imageId))
-            })
-            .catch(error => {
-                console.log(error);
             })
     }
 }
@@ -160,12 +157,9 @@ export const deleteImage = (imageId) => {
 export const updateImage = (imageId, description, name) => {
     return async (dispatch) => {
         await axios
-            .delete(`/api/images/update/${imageId}`, {description, name})
+            .put(`/api/images/update/${imageId}`, { description, name }, { headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` } })
             .then(() => {
                 dispatch(imageActionCreator.updateImage(imageId, description, name))
-            })
-            .catch(error => {
-                console.log(error);
             })
     }
 }

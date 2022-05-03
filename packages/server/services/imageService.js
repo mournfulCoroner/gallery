@@ -34,10 +34,18 @@ class ImageService {
     async deleteImage(filePath, previewFilePath) {
         return new Promise((resolve, reject) => {
             try {
-                if (fs.existsSync(filePath)) {
-                    fs.unlink(`${process.env.filePath}\\${filePath}`)
-                    fs.unlink(`${process.env.filePath}\\${previewFilePath}`)
-                    return resolve({message: "Картинка успешно удалена"})
+                let mainPath = `${process.env.filePath}\\${filePath.slice(7, filePath.length).replace('/', '\\')
+                    }`
+                console.log(mainPath);
+                if (fs.existsSync(mainPath)) {
+                    fs.unlink(mainPath, (err) => {
+                        if (err) throw err;
+                    })
+                    fs.unlink(`${process.env.filePath}\\${previewFilePath.slice(7, previewFilePath.length).replace('/', '\\')
+                        }`, (err) => {
+                            if (err) throw err
+                        })
+                    return resolve({ message: "Картинка успешно удалена" })
                 }
                 else {
                     return reject({ message: "Такой картинки на сервере не существует" })

@@ -198,7 +198,6 @@
 		height: 100%;
 
 		grid-auto-rows: min-content;
-
 	}
 
 	@media (max-width: 560px) {
@@ -233,5 +232,6 @@
 
 	&__name {
 		margin: 15px 0;
+		word-break: break-word;
 	}
 }

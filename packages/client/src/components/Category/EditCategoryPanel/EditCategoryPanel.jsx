@@ -158,7 +158,7 @@ function EditCategoryPanel() {
 								</button>
 							</div>
 							<div className="edit-category__images">
-								{images &&  images.map((image) => <ImageCardEdit onClick={displayEditPopup(image)} key={image._id} image={image} />)}
+								{images &&  images.map((image) => <ImageCardEdit onCustomClick={() => displayEditPopup(image)} key={image._id} image={image} />)}
 							</div>
 						</div>
 					)}
