@@ -1,12 +1,12 @@
 
 import './CategoryCard.scss';
 
-function CategoryCard({id, message, name}) {
+function CategoryCard({previewPath, name, date, customClickEvent}) {
 	return (
-		<div className="category-card">
-            <p>Это сообщение с id - {id} </p>
-            <p>Сообщение: {message}</p>
-			<p>Имя: {name}</p>
+		<div onClick={customClickEvent} className="category-card">
+            <img src={previewPath} alt="" />
+            <p>{name}</p>
+			<p className='category-card__date'>{date.slice(0, 10)}</p>
 		</div>
 	);
 }

@@ -1,0 +1,32 @@
+.question-admin-page{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 70px;
+}
+
+.question-card{
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+
+    &.unread{
+        border-top: 8px solid var(--text-color);
+    }
+
+    &__header{
+        border-bottom: 1px solid var(--text-color);
+        text-align: start;
+        padding: 10px 15px;
+        font-size: 1.2em;
+
+        p{
+            padding: 5px 0;
+        }
+    }
+
+    &__content{
+        text-align: start;
+        padding: 15px;
+    }
+}

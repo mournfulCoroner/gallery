@@ -9,9 +9,10 @@ import {
 	updateCategory,
 	categoryActionCreator,
 } from '../../../bll/reducers/reducerCategory';
-import { getImages } from '../../../bll/reducers/reducerImage';
+import { getImages, imageActionCreator } from '../../../bll/reducers/reducerImage';
 import Popup from './../../Popup/Popup';
 import ImageCardEdit from './ImageCardEdit';
+import PopupEdit from '../../Popup/PopupEdit';
 
 function EditCategoryPanel() {
 	const [ activeAdd, setActiveAdd ] = useState(false);
@@ -19,10 +20,12 @@ function EditCategoryPanel() {
 	const [ currentCategory, setCurrentCategory ] = useState(0);
 	const [ activeEditName, setActiveEditName ] = useState('');
 	const [ categoryEditName, setCategoryEditName ] = useState('');
+	const [ editImage, setEditImage ] = useState(null)
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.reducerCategory.categories);
 	const popupDisplay = useSelector((state) => state.reducerCategory.popupDisplay);
 	const images = useSelector((state) => state.reducerImage.images);
+	const editPopup = useSelector((state) => state.reducerCategory.editPopupDisplay)
 
 	useEffect(
 		() => {
@@ -47,6 +50,11 @@ function EditCategoryPanel() {
 		dispatch(deleteCategory(currentCategory));
 		setCurrentCategory(0);
 	};
+
+	const displayEditPopup = (image) => {
+		setEditImage(image)
+		dispatch(categoryActionCreator.toggleEditPopup(true))
+	}
 
 	let visibleCategories = categories.map((cat) => (
 		<div
@@ -150,13 +158,14 @@ function EditCategoryPanel() {
 								</button>
 							</div>
 							<div className="edit-category__images">
-								{images &&  images.map((image) => <ImageCardEdit key={image._id} image={image} />)}
+								{images &&  images.map((image) => <ImageCardEdit onClick={displayEditPopup(image)} key={image._id} image={image} />)}
 							</div>
 						</div>
 					)}
 				</div>
 			</div>
 
+			{editPopup && <PopupEdit image={editImage}/>}
 			{popupDisplay && <Popup categoryId={currentCategory} />}
 		</div>
 	);

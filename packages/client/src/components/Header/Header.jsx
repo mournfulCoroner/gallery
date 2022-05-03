@@ -1,4 +1,4 @@
-import { NavLink, useLocation} from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import './Header.scss';
 import burger from './../../assets/images/burger.png';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -7,20 +7,21 @@ import { useEffect } from 'react';
 import { getCategories } from '../../bll/reducers/reducerCategory';
 
 function Header() {
-	const user = useSelector((state) => state.reducerUser.user)
-	const categories = useSelector(state => state.reducerCategory.categories)
-	const dispatch = useDispatch()
-	
-	const params = useLocation()
-	useEffect(() => {
-		document.querySelector("#nav-toggle").checked = false
-	}, [params])
-	useEffect(() => {
-		dispatch(getCategories())
-	}, [])
+	const user = useSelector((state) => state.reducerUser.user);
+	const categories = useSelector((state) => state.reducerCategory.categories);
+	const dispatch = useDispatch();
 
+	const params = useLocation();
+	useEffect(
+		() => {
+			document.querySelector('#nav-toggle').checked = false;
+		},
+		[ params ]
+	);
+	useEffect(() => {
+		dispatch(getCategories());
+	}, []);
 
-	
 	return (
 		<header>
 			<input type="checkbox" id="nav-toggle" hidden />
@@ -44,7 +45,7 @@ function Header() {
 
 			<nav className="mobile-menu">
 				<div className="mobile-menu__container">
-					<div className='mobile-menu__nickname'>{user.nickname}</div>
+					<div className="mobile-menu__nickname">{user.nickname}</div>
 					<NavLink
 						className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
 						to="/login"
@@ -54,24 +55,26 @@ function Header() {
 
 					<NavLink
 						className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
-						to="/donut"
-					>
-						Задонатить
-					</NavLink>
-
-					<NavLink
-						className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
 						to="/question"
 					>
 						Задать вопрос
 					</NavLink>
-					{user.role === "Admin" && (
-						<NavLink
-							className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
-							to="/admin"
-						>
-							Редактировать
-						</NavLink>
+
+					{user.role === 'Admin' && (
+						<div>
+							<NavLink
+								className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
+								to="/admin"
+							>
+								Редактировать
+							</NavLink>
+							<NavLink
+								className={({ isActive }) => 'mobile-menu__link' + (isActive ? ' active' : '')}
+								to="/admin/question"
+							>
+								Вопросы
+							</NavLink>
+						</div>
 					)}
 
 					<div className="mobile-menu__categories">

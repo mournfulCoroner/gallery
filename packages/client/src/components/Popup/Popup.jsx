@@ -106,22 +106,22 @@ function Popup({ categoryId }) {
 	};
 
 	return (
-		<div className="image-popup" onClick={() => dispatch(categoryActionCreator.togglePopup())}>
-			<div className="image-popup__content" onClick={(e) => e.stopPropagation()}>
-				<div className="image-popup__header">
-					<div className="image-popup__title">Загрузка изображения</div>
+		<div className="image-edit-popup" onClick={() => dispatch(categoryActionCreator.togglePopup())}>
+			<div className="image-edit-popup__content" onClick={(e) => e.stopPropagation()}>
+				<div className="image-edit-popup__header">
+					<div className="image-edit-popup__title">Загрузка изображения</div>
 					<button
 						onClick={() => dispatch(categoryActionCreator.togglePopup())}
-						className="image-popup__close"
+						className="image-edit-popup__close"
 					>
 						<img src={cross} alt="" />
 					</button>
 				</div>
 				{!isLoadingError ? (
-					<div className="image-popup__main">
+					<div className="image-edit-popup__main">
 						{dragEnter ? (
 							<div
-								className="image-popup__preview-section preview-section"
+								className="image-edit-popup__preview-section preview-section"
 								onDragEnter={onDragEnterHandler}
 								onDragLeave={onDragLeaveHandler}
 								onDragOver={onDragOverHandler}
@@ -134,7 +134,7 @@ function Popup({ categoryId }) {
 							</div>
 						) : (
 							<div
-								className="image-popup__preview-section preview-section"
+								className="image-edit-popup__preview-section preview-section"
 								onDragEnter={onDragEnterHandler}
 								onDragLeave={onDragLeaveHandler}
 								onDragOver={onDragOverHandler}
@@ -157,7 +157,7 @@ function Popup({ categoryId }) {
 								/>
 							</div>
 						)}
-						<div className="image-popup__input-section">
+						<div className="image-edit-popup__input-section">
 							<input
 								type="text"
 								placeholder="Название"
@@ -176,7 +176,7 @@ function Popup({ categoryId }) {
 						</div>
 					</div>
 				) : (
-					<div className="image-popup__error">
+					<div className="image-edit-popup__error">
 						<p>Ошибка загрузки!</p>
 						<p>{isLoadingError}</p>
 					</div>
@@ -184,12 +184,12 @@ function Popup({ categoryId }) {
 				{isLoadingError ? (
 					<button
 						onClick={() => dispatch(categoryActionCreator.togglePopup())}
-						className="image-popup__create main-btn"
+						className="image-edit-popup__create main-btn"
 					>
 						Закрыть
 					</button>
 				) : (
-					<button onClick={sendImage} className="image-popup__create main-btn">
+					<button onClick={sendImage} className="image-edit-popup__create main-btn">
 						Сохранить
 					</button>
 				)}

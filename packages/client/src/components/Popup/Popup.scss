@@ -1,4 +1,4 @@
-.image-popup {
+.image-edit-popup {
 	width: 100%;
 	height: 100vh;
 	background: rgba(0, 0, 0, 0.5);
@@ -48,18 +48,6 @@
 
 	&__input-section {
 		padding: 20px 10px;
-		textarea {
-			resize: none;
-			padding: 12px;
-			background-color: #ebf0f9;
-			border-radius: 10px;
-			height: 120px !important;
-			border: 1px solid transparent;
-			width: 100%;
-		}
-		textarea:focus {
-			border: 1px solid var(--main-color);
-		}
 	}
 
 	&__error {
@@ -82,6 +70,69 @@
 	}
 }
 
+.image-popup {
+	&__header {
+		font-size: 20px;
+		// padding-bottom: 35px;
+		position: relative;
+		padding: 30px 30px 40px 30px;
+	}
+
+	&__date {
+		position: absolute;
+		bottom: 15px;
+		left: 30px;
+		font-size: 15px;
+	}
+	&__content {
+		width: 75%;
+		max-height: 90%;
+		padding: 0;
+	}
+
+	&__main {
+		display: flex;
+	}
+
+	&__image {
+		flex: 0 0 70%;
+		padding: 30px;
+		min-height: 500px;
+		background-color: #02102ae3;
+		border-bottom-left-radius: 10px;
+		overflow: hidden;
+		display: flex;
+		justify-content: center;
+		img {
+			max-width: 100%;
+			max-height: 70vh;
+			object-fit: cover;
+			object-position: center;
+			border-radius: 10px;
+		}
+	}
+
+	&__description {
+		flex: 0 0 30%;
+		padding: 20px 15px;
+		text-align: start;
+	}
+
+	@media (max-width: 890px) {
+		&__main {
+			flex-direction: column;
+		}
+		&__image {
+			min-height: unset;
+		}
+
+		&__content {
+			width: 95%;
+			max-height: unset;
+		}
+	}
+}
+
 .preview-section {
 	display: flex;
 	flex-direction: column-reverse;
@@ -97,7 +148,7 @@
 		margin-top: 20px;
 		border: 1px solid;
 
-		&:hover{
+		&:hover {
 			background-color: rgb(35 46 108 / 66%);
 			color: white;
 		}

@@ -1,6 +1,17 @@
-.category-card{
-    padding: 30px;
-    margin-top: 10px;
-    background-color: rgb(178, 212, 255);
-    border-radius: 10px;
+.category-page {
+	height: 100%;
+	width: 100%;
+	padding: 35px;
+	align-self: flex-start;
+
+
+	&__content {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		height: 100%;
+		width: 100%;	
+        column-gap: 35px;
+	}
+
+
 }

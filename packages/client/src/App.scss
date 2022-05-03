@@ -37,7 +37,7 @@
 	}
 }
 
-.mt-25{
+.mt-25 {
 	margin-top: 25px;
 }
 
@@ -51,6 +51,19 @@ input {
 }
 
 input:focus {
+	border: 1px solid var(--main-color);
+}
+
+textarea {
+	resize: none;
+	padding: 12px;
+	background-color: #ebf0f9;
+	border-radius: 10px;
+	height: 120px !important;
+	border: 1px solid transparent;
+	width: 100%;
+}
+textarea:focus {
 	border: 1px solid var(--main-color);
 }
 

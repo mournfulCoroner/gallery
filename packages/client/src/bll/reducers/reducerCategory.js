@@ -1,7 +1,12 @@
 import axios from "axios";
 
 const initialState = {
-    categories: [],
+    categories: [
+        {
+            _id: 1,
+            name: "Test"
+        }
+    ],
     category: null,
     popupDisplay: false,
     editPopupDisplay: false

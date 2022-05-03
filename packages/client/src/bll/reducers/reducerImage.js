@@ -2,14 +2,26 @@ import axios from "axios";
 
 const initialState = {
     loadingImage: "",
-    images: []
+    images: [
+        {
+            _id: 1,
+            name: "Закат",
+            description: "Описание",
+            path: "/files/Закаты/Закат1.jpg",
+            previewPath: "/files/Закаты/Закат1-prev.jpg",
+            date: "34234234423",
+            category: "1"
+        }
+    ],
+    imagePopupDisplay: false
 };
 
 const SET_LOADING_IMAGE = "SET_LOADING_IMAGE";
 const SET_IMAGES = "SET_IMAGES";
 const ADD_IMAGE = "ADD_IMAGE";
 const DELETE_IMAGE = "DELETE_IMAGE";
-const UPDATE_IMAGE = "UPDATE_IMAGE"
+const UPDATE_IMAGE = "UPDATE_IMAGE";
+const TOOGLE_IMAGE_POPUP = "TOGGLE_IMAGE_POPUP"
 
 const reducerImage = (state = initialState, action) => {
     switch (action.type) {
@@ -43,6 +55,11 @@ const reducerImage = (state = initialState, action) => {
                     }
                     return img
                 })
+            }
+        case TOOGLE_IMAGE_POPUP:
+            return {
+                ...state,
+                imagePopupDisplay: action.state
             }
         default: {
             return state;
@@ -81,6 +98,12 @@ export const imageActionCreator = {
         return {
             type: UPDATE_IMAGE,
             imageId, description, name
+        }
+    },
+    toggleImagePopup(state) {
+        return {
+            type: TOOGLE_IMAGE_POPUP,
+            state
         }
     }
 }
