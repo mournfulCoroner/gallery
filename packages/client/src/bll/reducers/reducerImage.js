@@ -123,11 +123,9 @@ export const loadImage = (file, fileName, categoryId, description) => {
                 headers: { Authorization: `Bearer ${localStorage.getItem('authorization')}` },
                 onUploadProgress: progressEvent => {
                     const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
-                    console.log('total', totalLength)
                     if (totalLength) {
                         let progress = Math.round((progressEvent.loaded * 100) / totalLength)
                         dispatch(imageActionCreator.setProgress(progress))
-                        console.log(progress)
                     }
                 }
             }).then(({ data }) => {

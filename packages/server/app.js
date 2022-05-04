@@ -26,6 +26,8 @@ app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
 app.use(filePathMiddleware(path.resolve(__dirname, 'files')))
 
+app.use('/files', express.static('./files'))
+
 app.set('view engine', 'jade');
 
 
