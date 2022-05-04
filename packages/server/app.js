@@ -5,6 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var fileUpload = require('express-fileupload')
 
+const filePathMiddleware = require("./middleware/filepath.middleware")
+const path = require('path')
+
 var pingRouter = require('./routes/ping');
 var usersRouter = require('./routes/users');
 var categoriesRouter = require('./routes/categories');
@@ -14,12 +17,15 @@ var questionsRouter = require('./routes/questions')
 var app = express();
 var router = express.Router();
 
+
 app.use(fileUpload({}))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
+app.use(filePathMiddleware(path.resolve(__dirname, 'files')))
 
 app.use('/files', express.static('./files'))
 

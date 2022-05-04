@@ -3,8 +3,8 @@ const fs = require('fs')
 
 class CategoryService {
 
-    createDir(category) {
-        const filePath = `${process.env.filePath}\\${category.name}`
+    createDir(req, category) {
+        const filePath = `${req.filePath}\\${category.name}`
         console.log(filePath);
         return new Promise(((resolve, reject) => {
             try {
