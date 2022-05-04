@@ -6,7 +6,6 @@ var logger = require('morgan');
 var fileUpload = require('express-fileupload')
 
 const filePathMiddleware = require("./middleware/filepath.middleware")
-const path = require('path')
 
 var pingRouter = require('./routes/ping');
 var usersRouter = require('./routes/users');

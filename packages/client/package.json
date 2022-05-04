@@ -1,5 +1,5 @@
 {
-  "name": "ikbo-01-19-leutina",
+  "name": "@myapp/client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
