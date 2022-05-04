@@ -7,7 +7,7 @@ const authMiddleware = require('../middleware/auth.middleware');
 
 router.get('/get', questionController.getQuestion)
 
-router.post('/create', authMiddleware, [
+router.post('/create', [
     check("text", "Текст вопроса должен быть не меньше трех символов").isLength({ min: 3 })
 ], questionController.createQuestion)
 

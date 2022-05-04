@@ -14,7 +14,7 @@ class ImageController {
             if (!category) {
                 return res.status(404).json({ message: "Такой категории не существует" })
             }
-            await ImageService.createImage(file, category.name)
+            await ImageService.createImage(req, file, category.name)
             const dbImage = new Image({
                 name: file.name,
                 description,
@@ -38,7 +38,7 @@ class ImageController {
             if (!dbImage) {
                 return res.status(404).json({ message: "Такого изображения не существует" })
             }
-            await imageService.deleteImage(dbImage.path, dbImage.previewPath)
+            await imageService.deleteImage(req, dbImage.path, dbImage.previewPath)
             await dbImage.remove()
             return res.json({message: "Картинка успешно удалена"})
         } catch (error) {

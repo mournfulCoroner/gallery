@@ -1,6 +1,7 @@
 const Category = require('../models/Category')
 const Image = require('../models/Image')
-const categoryService = require("../services/categoryService")
+const categoryService = require("../services/categoryService");
+const imageService = require('../services/imageService');
 
 
 class CategoryController {
@@ -15,7 +16,7 @@ class CategoryController {
             }
 
             const category = new Category({ name });
-            await categoryService.createDir(category)
+            await categoryService.createDir(req, category)
             await category.save();
             return res.json({category, message: "Категория была успешно создана"})
         } catch (error) {
@@ -49,6 +50,12 @@ class CategoryController {
             if(!id){
                 return res.status(400).json({ message: `Некорректный запрос` })
             }
+            let images = await Image.find({category: req.params.id})
+            for(let image in images){
+                imageService.deleteImage(req, image.filePath, image.previewFilePath)
+            }
+            await Image.deleteMany({category: req.params.id})
+            
             await Category.findByIdAndDelete(id, function (err, result) {
                 if (err) {
                     throw err;
