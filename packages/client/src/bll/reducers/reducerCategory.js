@@ -2,10 +2,6 @@ import axios from "axios";
 
 const initialState = {
     categories: [
-        {
-            _id: 1,
-            name: "Test"
-        }
     ],
     category: null,
     popupDisplay: false,
@@ -42,7 +38,7 @@ const reducerCategory = (state = initialState, action) => {
                 ...state,
                 categories: state.categories.map(cat => {
                     if (cat._id === action.id) {
-                        cat.name = action.name 
+                        cat.name = action.name
                     }
                     return cat
                 })
@@ -108,9 +104,10 @@ export const getCategories = () => {
         await axios
             .get('/api/categories/get')
             .then(({ data }) => {
-                dispatch(categoryActionCreator.setCategories(data))
-                let h = document.querySelector('header').offsetHeight;
-                document.querySelector('.page-container').style.paddingTop = (h + 40) + 'px'
+                dispatch(categoryActionCreator.setCategories(data)).then(() => {
+                    let h = document.querySelector('header').offsetHeight;
+                    document.querySelector('.page-container').style.paddingTop = (h + 40) + 'px'
+                })
             })
             .catch(error => {
                 console.log(error);

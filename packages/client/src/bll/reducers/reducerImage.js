@@ -3,15 +3,6 @@ import axios from "axios";
 const initialState = {
     loadingImage: "",
     images: [
-        {
-            _id: 1,
-            name: "Закат",
-            description: "Описание",
-            path: "/files/Закаты/Закат1.jpg",
-            previewPath: "/files/Закаты/Закат1-prev.jpg",
-            date: "34234234423",
-            category: "1"
-        }
     ],
     imagePopupDisplay: false,
     progress: 0
