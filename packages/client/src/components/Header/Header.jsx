@@ -19,7 +19,10 @@ function Header() {
 		[ params ]
 	);
 	useEffect(() => {
-		dispatch(getCategories());
+		dispatch(getCategories()).then(() => {
+			let h = document.querySelector('header').offsetHeight;
+			document.querySelector('.page-container').style.paddingTop = h + 20 + 'px';
+		});
 	}, []);
 
 	return (

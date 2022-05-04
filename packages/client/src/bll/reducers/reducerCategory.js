@@ -104,10 +104,7 @@ export const getCategories = () => {
         await axios
             .get('/api/categories/get')
             .then(({ data }) => {
-                dispatch(categoryActionCreator.setCategories(data)).then(() => {
-                    let h = document.querySelector('header').offsetHeight;
-                    document.querySelector('.page-container').style.paddingTop = (h + 40) + 'px'
-                })
+                dispatch(categoryActionCreator.setCategories(data))
             })
             .catch(error => {
                 console.log(error);
